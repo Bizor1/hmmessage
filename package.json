@@ -1,27 +1,48 @@
 {
-  "name": "hmmessagetm",
+  "name": "my-message",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:shopify": "ts-node src/scripts/test-shopify-connection.ts",
+    "upload-assets": "ts-node --project tsconfig.scripts.json scripts/upload-assets.ts",
+    "upload-failed": "ts-node --project tsconfig.scripts.json scripts/upload-failed.ts",
+    "check-missing": "ts-node --project tsconfig.scripts.json scripts/check-missing.ts",
+    "upload-specific": "ts-node --project tsconfig.scripts.json scripts/upload-specific.ts"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.76.1",
+    "@tanstack/react-query-devtools": "^5.76.0",
+    "@types/nodemailer": "^6.4.17",
+    "cloudinary": "^2.6.1",
+    "framer-motion": "^11.0.3",
+    "next": "14.1.0",
+    "next-cloudinary": "^6.16.0",
+    "nodemailer": "^7.0.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "resend": "^4.5.1",
+    "swiper": "^11.2.6"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.21",
+    "dotenv": "^16.5.0",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-next": "^14.1.0",
+    "mini-css-extract-plugin": "^2.9.2",
+    "postcss": "^8.4.35",
+    "postcss-nesting": "^13.0.1",
+    "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
   }
 }

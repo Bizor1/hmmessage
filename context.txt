@@ -1,0 +1,42 @@
+
+
+**Project Goal:** Develop a custom frontend for an e-commerce fashion brand, leveraging Shopify for all backend functionalities (products, cart, checkout, customer management, admin). This is a "headless commerce" approach.
+
+**Frontend Technology:** Next.js 14 (using the App Router, Server Components, and Server Actions).
+
+**Backend API:** Shopify Storefront GraphQL API.
+
+**Design Requirements:** The client wants the custom frontend's design (layout, typography, color scheme, overall feel) to closely emulate the Represent clothing website ([https://row.representclo.com/](https://row.representclo.com/)).
+
+**Key Implementation Points Discussed:**
+
+1.  **Shopify Setup:** Use the Storefront API, *not* the Admin API, for frontend data access. Obtain necessary API credentials (access token, endpoint URL) and store them securely (e.g., environment variables).
+2.  **Next.js Data Fetching:** Utilize Next.js Server Components to fetch data (products, collections) directly from the Shopify Storefront API using `fetch` or a GraphQL client. Define GraphQL queries/mutations.
+3.  **Cart Management:** Use Client Components for UI interaction (e.g., Add to Cart buttons). Implement cart logic (create, add, update, remove items) using Next.js Server Actions that call Shopify Storefront API mutations. Persist the cart ID between requests (e.g., using cookies).
+4.  **Checkout:** Obtain the `checkoutUrl` from the Shopify cart object via the API and redirect the user to Shopify's secure checkout page.
+5.  **Design Implementation:**
+    *   Thoroughly analyze the target Represent website's design elements (layout, fonts, colors, components, responsiveness) using browser developer tools.
+    *   Implement the design in Next.js using appropriate styling methods (e.g., Tailwind CSS configured with the target site's theme, CSS Modules, or global CSS).
+    *   Integrate custom fonts correctly (e.g., using `@next/font`).
+    *   Build custom React components to match the visual style of Represent's UI elements.
+    *   Focus on emulating the *style* and *feel* rather than exact cloning.
+6.  **Admin:** All store management (products, orders, etc.) will still happen through the standard Shopify Admin interface.
+
+
+Font: inter
+background = f7f7f7
+Inter - 400
+
+Family
+Inter, sans-serif
+Style
+normal
+Weight
+400
+Color
+rgb(0, 0, 0)
+Size
+12px
+Line Height
+16px
+
