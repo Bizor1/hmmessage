@@ -10,7 +10,7 @@ import { CollectionsProvider } from '@/context/CollectionsContext'
 import CartSidebar from "@/components/CartSidebar";
 import ChatModal from "@/components/ChatModal";
 import { Providers } from './providers';
-import { FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaTiktok } from 'react-icons/fa';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -82,49 +82,36 @@ export default function RootLayout({
                         <div className="space-y-2">
                           <h3 className="text-sm font-semibold uppercase">Company</h3>
                           <ul className="space-y-2">
-                            <li><Link href="/about" className="text-xs text-gray-600 hover:text-black">About Us</Link></li>
-                            <li><span className="text-xs text-gray-400 cursor-not-allowed">Careers</span></li>
-                            <li><span className="text-xs text-gray-400 cursor-not-allowed">Reviews</span></li>
+                            <li className="font-semibold mb-4">Links</li>
+                            <li><Link href="/about" className="text-xs text-gray-400 hover:text-white">About</Link></li>
+                            <li><Link href="/story" className="text-xs text-gray-400 hover:text-white">Story</Link></li>
+                            <li><Link href="/contact" className="text-xs text-gray-400 hover:text-white">Contact</Link></li>
+                            <li><Link href="/shop" className="text-xs text-gray-400 hover:text-white">Shop</Link></li>
                           </ul>
                         </div>
 
                         <div>
                           <h3 className="text-sm font-medium mb-4">Social</h3>
-                          <ul className="space-y-2">
-                            <li>
-                              <a
-                                href="https://www.instagram.com/mymessage55"
-                                className="flex items-center text-xs text-gray-600 hover:text-black"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <FaInstagram className="w-4 h-4 mr-2" />
-                                Instagram
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                href="https://www.tiktok.com/@mymessage55"
-                                className="flex items-center text-xs text-gray-600 hover:text-black"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <FaTiktok className="w-4 h-4 mr-2" />
-                                TikTok
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                href="https://wa.me/447307638132"
-                                className="flex items-center text-xs text-gray-600 hover:text-black"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <FaWhatsapp className="w-4 h-4 mr-2" />
-                                WhatsApp
-                              </a>
-                            </li>
-                          </ul>
+                          <div className="flex space-x-4">
+                            <Link
+                              href="https://www.instagram.com/mymessage.tm"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center text-gray-700 hover:text-black transition-colors duration-200"
+                            >
+                              <FaInstagram className="w-5 h-5 mr-2" />
+                              Instagram
+                            </Link>
+                            <Link
+                              href="https://www.tiktok.com/@mymessage.tm"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center text-gray-700 hover:text-black transition-colors duration-200"
+                            >
+                              <FaTiktok className="w-5 h-5 mr-2" />
+                              TikTok
+                            </Link>
+                          </div>
                         </div>
 
                         <div>

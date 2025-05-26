@@ -241,6 +241,114 @@ export default function StoryPage() {
                         </div>
                     </motion.div>
 
+                    {/* Carpenter Shorts Section */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 mb-32 relative"
+                    >
+                        <div className="relative h-[600px] md:h-[800px]">
+                            <CurtainReveal>
+                                <CldImage
+                                    src="https://res.cloudinary.com/duhfv8nqy/image/upload/v1748261626/WhatsApp_Image_2025-05-26_at_9.51.29_AM_r9a69x.jpg"
+                                    alt="Carpenter Shorts"
+                                    fill
+                                    className="object-cover rounded-lg"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            </CurtainReveal>
+                        </div>
+                        <div className="flex items-center">
+                            <div className="space-y-6 bg-black/80 p-8 rounded-lg backdrop-blur-sm relative z-10">
+                                <h2 className="text-2xl md:text-4xl font-bold mb-6 uppercase tracking-wide">BUILT TO SHIFT: THE CARPENTER SHORTS</h2>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    At MY-MESSAGE, innovation meets intention. These aren&apos;t just shorts, they&apos;re a statement.
+                                    The June 2025 drop introduces our carpenter shorts with a game-changing feature: a swappable panel.
+                                    Designed with a fastening system, the box can be clipped on and off, giving you the power to shift
+                                    your style without changing your foundation.
+                                </p>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    Each panel tells a different story: the plain canvas for simplicity, the rhinestone layout for bold presence,
+                                    and the lace rope designed for raw detail. Whether dressing for reflection, expression, or elevation,
+                                    this piece adapts with you.
+                                </p>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    On the back: an embroidery of Jesus wearing the crown of thorns. A powerful reminder of endurance,
+                                    sacrifice and grace. This isn&apos;t just fashion. It&apos;s about standing firm in faith while daring to move with purpose.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Carpenter Shorts Styling Guide */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mb-32 relative z-10 bg-black/80 p-12 rounded-lg backdrop-blur-sm"
+                    >
+                        <h2 className="text-2xl md:text-4xl font-bold text-center mb-12 uppercase tracking-wide">HOW TO STYLE IT: THE CARPENTER SHORTS</h2>
+                        <div className="grid md:grid-cols-3 gap-12">
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-bold uppercase tracking-wide">Elevated Street:</h3>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    Pair with a boxy graphic tee or oversized long sleeve and a clean white sneaker.
+                                    Swap in the rhinestone panel for a bold finish. Add layered chains or cross pendant
+                                    to complete the look.
+                                </p>
+                            </div>
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-bold uppercase tracking-wide">Minimal Look:</h3>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    Go with the plain panel. Style it with a neutral toned hoodie or sweatshirt, pair with
+                                    chunky sandals or loafers. A tote bag adds quiet confidence.
+                                </p>
+                            </div>
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-bold uppercase tracking-wide">Creative Edge:</h3>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    Clip on the lace rope panel and wear it with a cropped utility jacket or zip up and high
+                                    socks with boots. Play with asymmetry by accessorizing with rings and pocket chain.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Carpenter Shorts Additional Image */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 mb-32 relative"
+                    >
+                        <div className="flex items-center md:order-2">
+                            <div className="space-y-6 bg-black/80 p-8 rounded-lg backdrop-blur-sm relative z-10">
+                                <h2 className="text-2xl md:text-4xl font-bold mb-6 uppercase tracking-wide">WEAR IT BOLDLY</h2>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    Cover up - Spiritually and Stylishly. Behind it all is a deeper message.
+                                    This piece isn&apos;t just about making a fashion statement, it&apos;s about carrying
+                                    your faith with confidence and purpose.
+                                </p>
+                                <p className="text-xs md:text-sm leading-relaxed tracking-wide">
+                                    The June 2025 collection represents more than just seasonal style - it&apos;s about
+                                    creating pieces that adapt to your journey while keeping you grounded in what matters most.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="relative h-[600px] md:h-[800px] md:order-1">
+                            <CurtainReveal>
+                                <CldImage
+                                    src="https://res.cloudinary.com/duhfv8nqy/image/upload/v1748261631/WhatsApp_Image_2025-05-26_at_10.01.45_AM_ubyfjq.jpg"
+                                    alt="Carpenter Shorts Additional View"
+                                    fill
+                                    className="object-cover rounded-lg"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            </CurtainReveal>
+                        </div>
+                    </motion.div>
+
                     {/* Final Message */}
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}

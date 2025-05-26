@@ -1,7 +1,8 @@
 'use client';
 
+import React from 'react';
 import { useState } from 'react';
-import { FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaTiktok } from 'react-icons/fa';
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -71,34 +72,27 @@ export default function ContactPage() {
                             <div>
                                 <h3 className="text-lg font-medium mb-2">Customer Support</h3>
                                 <p className="text-gray-600">+44 7307 638132</p>
-                                <a
-                                    href="https://wa.me/447307638132"
-                                    className="inline-flex items-center text-gray-600 hover:text-green-600 mt-2"
-                                >
-                                    <FaWhatsapp className="w-5 h-5 mr-2" />
-                                    Chat on WhatsApp
-                                </a>
                             </div>
                             <div>
                                 <h3 className="text-lg font-medium mb-2">Social Media</h3>
-                                <div className="space-y-3">
+                                <div className="flex flex-col space-y-4">
                                     <a
-                                        href="https://www.instagram.com/mymessage55"
+                                        href="https://www.instagram.com/mymessage.tm"
+                                        className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 hover:text-black hover:border-black transition-all duration-200"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center text-gray-600 hover:text-pink-600"
                                     >
-                                        <FaInstagram className="w-5 h-5 mr-2" />
-                                        @mymessage55
+                                        <FaInstagram className="w-6 h-6 mr-3" />
+                                        Follow on Instagram
                                     </a>
                                     <a
-                                        href="https://www.tiktok.com/@mymessage55"
+                                        href="https://www.tiktok.com/@mymessage.tm"
+                                        className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 hover:text-black hover:border-black transition-all duration-200"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center text-gray-600 hover:text-black"
                                     >
-                                        <FaTiktok className="w-5 h-5 mr-2" />
-                                        @mymessage55
+                                        <FaTiktok className="w-6 h-6 mr-3" />
+                                        Follow on TikTok
                                     </a>
                                 </div>
                             </div>

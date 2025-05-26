@@ -92,7 +92,7 @@ export default function CollectionClient({ handle }: CollectionClientProps) {
     });
 
     return (
-        <div className="py-12">
+        <div className="pt-32">
             <div className="container-represent">
                 <h1 className="text-2xl font-medium mb-8">{data.title}</h1>
                 <ProductGrid products={products} />

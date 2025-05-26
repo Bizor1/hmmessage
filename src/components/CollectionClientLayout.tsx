@@ -51,7 +51,7 @@ export default function CollectionClientLayout({
     }, []);
 
     return (
-        <div className="container-represent py-4 pt-24">
+        <div className="container-represent pt-32">
             {/* Static Header Section */}
             <div className="mb-8">
                 <h1 className="text-2xl font-medium mb-2">

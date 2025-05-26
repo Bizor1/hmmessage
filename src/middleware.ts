@@ -12,6 +12,18 @@ const DEPRECATED_ROUTES = [
   '/reviews'
 ]
 
+const publicRoutes = [
+    '/',
+    '/about',
+    '/contact',
+    '/story',
+    '/shop',
+    '/api/auth/signin',
+    '/api/auth/signout',
+    '/api/auth/session',
+    '/api/auth/csrf',
+];
+
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 

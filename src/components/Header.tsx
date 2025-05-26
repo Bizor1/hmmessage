@@ -101,12 +101,12 @@ export default function Header() {
                                 {/* Pass category to handlers - hover only active on md+ screens */}
                                 <div onMouseEnter={() => handleMouseEnter('men')} onMouseLeave={handleMouseLeave} className="hidden md:block">
                                     <Link href="/collections/all" className={linkClassName}>
-                                        Under His Shelter
+                                        Style
                                     </Link>
                                 </div>
                                 <div onMouseEnter={() => handleMouseEnter('women')} onMouseLeave={handleMouseLeave} className="hidden md:block">
                                     <Link href="/products/washed-green-t-shirt" className={linkClassName}>
-                                        Grey washed
+                                        Elegance
                                     </Link>
                                 </div>
                                 {/* 247 link remains visible */}

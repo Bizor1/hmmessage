@@ -13,18 +13,28 @@ export default function AboutPage() {
                     priority
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wider">Our Story</h1>
+                    <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wider">About Us</h1>
                 </div>
             </div>
 
             {/* Mission Statement */}
             <section className="py-20 px-4">
                 <div className="container-represent max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl font-light mb-8">Redefining Modern Expression</h2>
-                    <p className="text-gray-600 text-lg leading-relaxed mb-12">
-                        MYMESSAGE was born from a vision to create clothing that speaks without words.
-                        We believe in the power of personal style as a form of self-expression,
-                        where each piece tells a story and every collection opens a new chapter.
+                    <h2 className="text-3xl font-light mb-8">More Than Fashion</h2>
+                    <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                        MyMessage is more than a fashion brand - it&apos;s a personal mission, a voice, a testimony.
+                        Every piece we create carries a message of hope, faith, and purpose that transcends trends.
+                        Our name reflects a deeper calling: to wear what you believe and share what you stand for.
+                    </p>
+                    <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                        Rooted in Christian values, we design with intention - each item crafted to spread the Good News,
+                        uplift hearts, and speak life. We believe fashion should inspire, not just impress. That&apos;s why
+                        our collections are filled with meaning, encouraging everyone - regardless of background - to live
+                        boldly and carry their own message with confidence.
+                    </p>
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                        From our hands to your wardrobe, every design is a statement: this is MyMessage to the world.
+                        Join us in wearing faith, living truth, and making the change you want to see.
                     </p>
                 </div>
             </section>
@@ -34,24 +44,24 @@ export default function AboutPage() {
                 <div className="container-represent max-w-6xl mx-auto">
                     <div className="grid md:grid-cols-3 gap-12">
                         <div className="text-center">
-                            <h3 className="text-xl font-semibold mb-4">Sustainability</h3>
+                            <h3 className="text-xl font-semibold mb-4">Faith</h3>
                             <p className="text-gray-600">
-                                Our commitment to the environment drives every decision,
-                                from material selection to packaging solutions.
+                                Our foundation is built on Christian values,
+                                guiding every design and decision we make.
                             </p>
                         </div>
                         <div className="text-center">
-                            <h3 className="text-xl font-semibold mb-4">Innovation</h3>
+                            <h3 className="text-xl font-semibold mb-4">Purpose</h3>
                             <p className="text-gray-600">
-                                We push boundaries in design and technology to create
-                                clothing that meets the demands of modern life.
+                                Each piece is crafted with intention,
+                                designed to inspire and spread the Good News.
                             </p>
                         </div>
                         <div className="text-center">
-                            <h3 className="text-xl font-semibold mb-4">Community</h3>
+                            <h3 className="text-xl font-semibold mb-4">Impact</h3>
                             <p className="text-gray-600">
-                                We&apos;re building more than a brand - we&apos;re creating a
-                                community of individuals who share our passion.
+                                We believe in fashion that makes a difference,
+                                encouraging others to live boldly in their faith.
                             </p>
                         </div>
                     </div>
@@ -70,32 +80,32 @@ export default function AboutPage() {
                             </div>
                             <div className="md:w-2/3">
                                 <p className="text-gray-600">
-                                    MYMESSAGE debuts with its first collection,
-                                    introducing our unique vision to the world.
+                                    MyMessage debuts with a vision to create faith-inspired
+                                    fashion that speaks to hearts and transforms lives.
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-col md:flex-row items-center gap-8">
                             <div className="md:w-1/3 text-right">
                                 <h3 className="text-xl font-semibold">2024</h3>
-                                <p className="text-gray-600">Global Expansion</p>
+                                <p className="text-gray-600">Second Collection</p>
                             </div>
                             <div className="md:w-2/3">
                                 <p className="text-gray-600">
-                                    Opening our first flagship stores and expanding
-                                    our presence across major fashion capitals.
+                                    Launching our Psalm 91 Long Sleeve collection,
+                                    deepening our commitment to faith-inspired fashion.
                                 </p>
                             </div>
                         </div>
                         <div className="flex flex-col md:flex-row items-center gap-8">
                             <div className="md:w-1/3 text-right">
                                 <h3 className="text-xl font-semibold">2025</h3>
-                                <p className="text-gray-600">Innovation Hub</p>
+                                <p className="text-gray-600">Innovation & Impact</p>
                             </div>
                             <div className="md:w-2/3">
                                 <p className="text-gray-600">
-                                    Launching our innovation center, focusing on
-                                    sustainable materials and future fashion technologies.
+                                    Introducing groundbreaking designs like our Carpenter Shorts,
+                                    continuing to blend faith and fashion in innovative ways.
                                 </p>
                             </div>
                         </div>

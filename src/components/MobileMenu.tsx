@@ -87,10 +87,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <div className="border-t border-gray-100 pt-4">
                         <div className="space-y-3">
                             <Link href="/collections/all" className="block text-base" onClick={onClose}>
-                                Under His Shelter
+                                Style
                             </Link>
                             <Link href="/products/washed-green-t-shirt" className="block text-base" onClick={onClose}>
-                                Grey washed
+                                Elegance
                             </Link>
                         </div>
                     </div>
@@ -99,15 +99,19 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <div className="border-t border-gray-100 pt-4">
                         <h3 className="text-sm font-semibold uppercase mb-4">SHOP</h3>
                         <div className="space-y-3">
-                            {mainCollection && (
+                            <Link href="/collections/all" className="block text-base" onClick={onClose}>
+                                All Products
+                            </Link>
+                            {collections?.map((collection) => (
                                 <Link
-                                    href={`/collections/${mainCollection.handle}`}
+                                    key={collection.id}
+                                    href={`/collections/${collection.handle}`}
                                     className="block text-base"
                                     onClick={onClose}
                                 >
-                                    {mainCollection.title}
+                                    {collection.title}
                                 </Link>
-                            )}
+                            ))}
                         </div>
                     </div>
 

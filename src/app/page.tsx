@@ -53,8 +53,12 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center md:justify-end text-center text-white px-4 pb-0 md:pb-32">
-          <div className="mb-2 text-xs uppercase tracking-widest letter-spacing-wider">Discover</div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 uppercase tracking-wide">NEW ARRIVALS</h2>
+          <Link
+            href="/collections/all"
+            className="btn-underline"
+          >
+            <span className="mr-2">→</span> DISCOVER
+          </Link>          <h2 className="text-3xl md:text-5xl font-bold mb-6 uppercase tracking-wide"></h2>
           <Link
             href="/collections/all"
             className="btn-underline mb-16 md:mb-0"
@@ -81,25 +85,29 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="mb-3 text-xs uppercase tracking-widest">EXPLORE COLLECTIONS</div>
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
               href="/collections/all"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
-              Under His Shelter
+              T-shirts
             </Link>
             <Link
               href="/products/black-rhinestones-distressed-sweatshirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Rhinestone
+            >Hoodie
             </Link>
             <Link
               href="/products/dark-grey-washed-t-shirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Grey Washed
+              Sweatshirt
+            </Link>
+            <Link
+              href="/products/dark-grey-washed-t-shirt"
+              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Shorts
             </Link>
           </div>
           <Link
@@ -128,25 +136,29 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="mb-3 text-xs uppercase tracking-widest">EXPLORE COLLECTIONS</div>
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
               href="/collections/all"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Under His Shelter
-            </Link>
+              T-shirts           </Link>
             <Link
               href="/products/black-rhinestones-distressed-sweatshirt"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
-              Rhinestone
+              Hoodies
             </Link>
             <Link
               href="/products/dark-grey-washed-t-shirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Grey washed
+              Sweatshirt
+            </Link>
+            <Link
+              href="/products/dark-grey-washed-t-shirt"
+              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Shorts
             </Link>
           </div>
           <Link
@@ -175,25 +187,30 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="mb-3 text-xs uppercase tracking-widest">EXPLORE COLLECTIONS</div>
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
               href="/collections/all"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Under His Shelter
+              T-shirt
             </Link>
             <Link
               href="/products/black-rhinestones-distressed-sweatshirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Rhinestone
+              Hoodies
             </Link>
             <Link
               href="/products/dark-grey-washed-t-shirt"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
-              Grey Washed
+              Sweatshirt
+            </Link>
+            <Link
+              href="/products/dark-grey-washed-t-shirt"
+              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Shorts
             </Link>
           </div>
           <Link
@@ -222,25 +239,30 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="mb-3 text-xs uppercase tracking-widest">EXPLORE COLLECTIONS</div>
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
               href="/collections/all"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Under His Shelter
+              T-shirts
             </Link>
             <Link
               href="/products/black-rhinestones-distressed-sweatshirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Rhinestone
+              Hoodies
+            </Link>
+            <Link
+              href="/products/dark-grey-washed-t-shirt"
+              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Sweatshirts
             </Link>
             <Link
               href="/products/dark-grey-washed-t-shirt"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
-              Grey washed
+              Shorts
             </Link>
           </div>
           <Link
