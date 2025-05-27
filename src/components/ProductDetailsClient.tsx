@@ -38,6 +38,7 @@ interface ProductDetailsProps {
         id: string;
         title: string;
         description: string;
+        descriptionHtml: string;
         price: number;
         currencyCode: string;
         mainImages: ProductMedia[];
@@ -275,7 +276,14 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                             </div>
 
                             <div className="prose prose-sm">
-                                <p>{product.description}</p>
+                                {(() => {
+                                    const parts = product.description.split('PRODUCT DESCRIPTION');
+                                    if (parts.length > 1) {
+                                        const descriptionParts = parts[1].split('PRODUCT DETAILS');
+                                        return <p>{descriptionParts[0].trim()}</p>;
+                                    }
+                                    return <p>{product.description}</p>;
+                                })()}
                             </div>
 
                             {/* Size Selection */}
@@ -345,7 +353,14 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                     </button>
                                     {activeSection === 'details' && (
                                         <div className="mt-4 prose prose-sm">
-                                            <p>{product.description}</p>
+                                            {(() => {
+                                                const parts = product.descriptionHtml.split('PRODUCT DETAILS');
+                                                if (parts.length > 1) {
+                                                    const detailsParts = parts[1].split('SIZE CHART');
+                                                    return <div dangerouslySetInnerHTML={{ __html: detailsParts[0].trim() }} />;
+                                                }
+                                                return <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />;
+                                            })()}
                                         </div>
                                     )}
                                 </div>
@@ -374,7 +389,13 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                     </button>
                                     {activeSection === 'size' && (
                                         <div className="mt-4 prose prose-sm">
-                                            <p>Size guide information would go here.</p>
+                                            {(() => {
+                                                const parts = product.descriptionHtml.split('SIZE CHART');
+                                                if (parts.length > 1) {
+                                                    return <div dangerouslySetInnerHTML={{ __html: parts[1].trim() }} />;
+                                                }
+                                                return <p>Size guide information will be available soon.</p>;
+                                            })()}
                                         </div>
                                     )}
                                 </div>

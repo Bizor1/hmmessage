@@ -25,12 +25,12 @@ export default function Home() {
         {/* Hero content overlay */}
         <div className="relative flex flex-col items-center justify-center h-full text-center text-white px-4">
           <div className="mb-4 text-xs uppercase tracking-widest">Coming Soon</div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-wide">UNDER HIS SHELTER</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-wide">Summer 25</h1>
           <div className="text-xl mb-8">
-            <span>02</span> / <span>06</span> / <span>2025</span> #<span> ANTICIPATE</span>
+            <span> ANTICIPATE</span>
           </div>
           <Link
-            href="/story"
+            href="/new-arrivals"
             className="btn-underline"
           >
             <span className="mr-2">→</span> New Arrivals
@@ -78,7 +78,7 @@ export default function Home() {
             loop
             playsInline
           >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1/mymessage/videos/2025_05_08_13_07_IMG_6845" type="video/mp4" />
+            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345551/WhatsApp_Video_2025-05-15_at_10.52.41_AM_gzpmqj.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {/* Subtle gradient overlay for text readability */}
@@ -129,7 +129,7 @@ export default function Home() {
             loop
             playsInline
           >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1/mymessage/videos/2025_05_08_13_07_IMG_6846" type="video/mp4" />
+            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345542/WhatsApp_Video_2025-05-15_at_10.52.41_AM_1_kz90gp.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {/* Subtle gradient overlay for text readability */}
@@ -180,7 +180,7 @@ export default function Home() {
             loop
             playsInline
           >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1/mymessage/videos/2025_05_08_13_07_IMG_6847" type="video/mp4" />
+            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345540/WhatsApp_Video_2025-05-15_at_10.52.42_AM_rca8pk.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {/* Subtle gradient overlay for text readability */}
@@ -232,7 +232,7 @@ export default function Home() {
             loop
             playsInline
           >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1/mymessage/videos/2025_05_08_13_07_IMG_6846" type="video/mp4" />
+            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345542/WhatsApp_Video_2025-05-15_at_10.52.41_AM_1_kz90gp.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {/* Subtle gradient overlay for text readability */}

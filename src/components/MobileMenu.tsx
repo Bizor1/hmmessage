@@ -99,6 +99,9 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <div className="border-t border-gray-100 pt-4">
                         <h3 className="text-sm font-semibold uppercase mb-4">SHOP</h3>
                         <div className="space-y-3">
+                            <Link href="/new-arrivals" className="block text-base" onClick={onClose}>
+                                New Arrivals
+                            </Link>
                             <Link href="/collections/all" className="block text-base" onClick={onClose}>
                                 All Products
                             </Link>

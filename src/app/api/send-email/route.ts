@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { sendEmail } from '@/lib/email';
+import { sendEmail } from '@/utils/email';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { email, subject, message, name } = body;
 
-    // Validate the request body
+    // Validate required fields
     if (!email || !message) {
       return NextResponse.json(
         { error: 'Email and message are required' },
@@ -14,36 +14,51 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate email configuration
-    if (!process.env.ZOHO_EMAIL || !process.env.ZOHO_PASSWORD) {
-      console.error('Email configuration is missing');
+    // Prepare email content
+    let emailSubject = subject || 'New Message from Website';
+    let emailText = message;
+    let emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Message from Website</h2>
+        <p><strong>From:</strong> ${email}</p>
+        ${name ? `<p><strong>Name:</strong> ${name}</p>` : ''}
+        ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
+        <div style="margin-top: 20px;">
+          <p><strong>Message:</strong></p>
+          <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+            ${message.replace(/\n/g, '<br>')}
+          </div>
+        </div>
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 12px;">
+          <p>This email was sent from the MyMessage Clothing website contact form.</p>
+        </div>
+      </div>
+    `;
+
+    // Send email
+    const result = await sendEmail({
+      to: 'mymessageclothing@gmail.com',
+      subject: emailSubject,
+      text: emailText,
+      html: emailHtml,
+    });
+
+    if (!result.success) {
+      console.error('Email sending failed:', result.error, result.details);
       return NextResponse.json(
-        { error: 'Email service not configured' },
+        { error: 'Failed to send email', details: result.details },
         { status: 500 }
       );
     }
 
-    // Send email using Zoho SMTP
-    const result = await sendEmail({
-      to: process.env.ZOHO_EMAIL!, // Send to your business email
-      subject: subject || `New message from ${name || 'Customer'}`,
-      html: `
-        <h2>New Message from Website</h2>
-        <p><strong>From:</strong> ${name || 'Not provided'}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject || 'Not provided'}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
-      replyTo: email
+    return NextResponse.json({ 
+      message: 'Email sent successfully',
+      messageId: result.messageId 
     });
-
-    console.log('Email sent successfully:', result);
-    return NextResponse.json(result);
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error in send-email route:', error);
     return NextResponse.json(
-      { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Failed to send email', details: 'An unexpected error occurred' },
       { status: 500 }
     );
   }

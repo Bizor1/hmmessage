@@ -100,17 +100,26 @@ export default function Header() {
                             <nav className="hidden md:flex space-x-6">
                                 {/* Pass category to handlers - hover only active on md+ screens */}
                                 <div onMouseEnter={() => handleMouseEnter('men')} onMouseLeave={handleMouseLeave} className="hidden md:block">
-                                    <Link href="/collections/all" className={linkClassName}>
-                                        Style
+                                    <Link href="/collections/all" className={`${linkClassName} flex items-center space-x-2`}>
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5"
+                                        >
+                                            <path
+                                                d="M4 6H20M4 12H20M4 18H20"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                        <span>Menu</span>
                                     </Link>
                                 </div>
-                                <div onMouseEnter={() => handleMouseEnter('women')} onMouseLeave={handleMouseLeave} className="hidden md:block">
-                                    <Link href="/products/washed-green-t-shirt" className={linkClassName}>
-                                        Elegance
-                                    </Link>
-                                </div>
-                                {/* 247 link remains visible */}
-
                             </nav>
 
                             {/* Mobile nav toggle - Opens Mobile Menu */}

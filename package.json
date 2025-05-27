@@ -16,9 +16,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-query-devtools": "^5.76.0",
-    "@types/nodemailer": "^6.4.17",
+    "@types/canvas-confetti": "^1.9.0",
+    "canvas-confetti": "^1.9.3",
     "cloudinary": "^2.6.1",
-    "framer-motion": "^11.0.3",
+    "framer-motion": "^11.18.2",
     "next": "14.1.0",
     "next-cloudinary": "^6.16.0",
     "nodemailer": "^7.0.3",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.21",

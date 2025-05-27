@@ -10,6 +10,7 @@ const getProductQuery = `
       id
       title
       description
+      descriptionHtml
       handle
       priceRange {
         minVariantPrice {
@@ -66,6 +67,7 @@ interface ShopifyProduct {
     id: string;
     title: string;
     description: string;
+    descriptionHtml: string;
     handle: string;
     priceRange: {
         minVariantPrice: {
@@ -194,6 +196,7 @@ export default async function ProductPage({ params }: PageProps) {
             id: response.product.id,
             title: response.product.title,
             description: response.product.description,
+            descriptionHtml: response.product.descriptionHtml,
             price: parseFloat(response.product.priceRange.minVariantPrice.amount),
             currencyCode: response.product.priceRange.minVariantPrice.currencyCode,
             mainImages: mainImages.map(img => ({
