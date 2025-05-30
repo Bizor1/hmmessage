@@ -24,7 +24,7 @@ export async function shopifyFetch<T>(
         throw new Error('Missing required environment variables NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_ACCESS_TOKEN');
     }
 
-    const endpoint = `https://${storeDomain}/api/2024-01/graphql.json`;
+    const endpoint = `https://${storeDomain}/api/2025-04/graphql.json`;
 
     try {
         console.log('Making request to Shopify API:', endpoint);

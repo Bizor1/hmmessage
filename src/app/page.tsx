@@ -87,24 +87,24 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
-              href="/collections/all"
+              href="/collections/t-shirts"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
               T-shirts
             </Link>
             <Link
-              href="/products/black-rhinestones-distressed-sweatshirt"
+              href="/collections/hoodie"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >Hoodie
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/sweatshirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Sweatshirt
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/shorts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Shorts
@@ -138,31 +138,31 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
-              href="/collections/all"
+              href="/collections/t-shirts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               T-shirts           </Link>
             <Link
-              href="/products/black-rhinestones-distressed-sweatshirt"
+              href="/collections/hoodie"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
               Hoodies
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/sweatshirt"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Sweatshirt
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/shorts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Shorts
             </Link>
           </div>
           <Link
-            href="/products/black-rhinestones-distressed-sweatshirt"
+            href="/collections/hoodie"
             className="btn-underline"
           >
             <span className="mr-2">→</span> DISCOVER
@@ -189,32 +189,32 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
-              href="/collections/all"
+              href="/collections/t-shirts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               T-shirt
             </Link>
             <Link
-              href="/products/black-rhinestones-distressed-sweatshirt"
+              href="/collections/hoodie"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Hoodies
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/sweatshirt"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
               Sweatshirt
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/shorts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Shorts
             </Link>
           </div>
           <Link
-            href="/products/dark-grey-washed-t-shirt"
+            href="/collections/sweatshirt"
             className="btn-underline"
           >
             <span className="mr-2">→</span> DISCOVER
@@ -241,32 +241,32 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <div className="space-y-3 md:space-y-4 mb-6">
             <Link
-              href="/collections/all"
+              href="/collections/t-shirts"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               T-shirts
             </Link>
             <Link
-              href="/products/black-rhinestones-distressed-sweatshirt"
+              href="/collections/hoodie"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
               Hoodies
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/long-sleeve-tee"
               className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
             >
-              Sweatshirts
+              Long Sleeve Tee
             </Link>
             <Link
-              href="/products/dark-grey-washed-t-shirt"
+              href="/collections/shorts"
               className="block text-xl md:text-3xl font-medium uppercase opacity-100"
             >
               Shorts
             </Link>
           </div>
           <Link
-            href="/products/dark-grey-washed-t-shirt"
+            href="/collections/shorts"
             className="btn-underline"
           >
             <span className="mr-2">→</span> DISCOVER

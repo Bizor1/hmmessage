@@ -1,4 +1,4 @@
-import { shopifyFetch } from './shopify';
+import { executeStorefrontQuery } from './shopifyClient';
 import { getCollectionsQuery, getCollectionProductsQuery } from './shopify/queries';
 
 interface ShopifyCollection {
@@ -45,7 +45,9 @@ interface ShopifyCollectionProducts {
 // Function to prefetch all collections
 async function prefetchCollections() {
     try {
-        const response = await shopifyFetch<ShopifyCollection>(getCollectionsQuery);
+        const response = await executeStorefrontQuery<ShopifyCollection>({
+            query: getCollectionsQuery
+        });
         return response.collections.edges;
     } catch (error) {
         console.error('Error prefetching collections:', error);
@@ -56,10 +58,10 @@ async function prefetchCollections() {
 // Function to prefetch products for a collection
 async function prefetchCollectionProducts(handle: string) {
     try {
-        const response = await shopifyFetch<ShopifyCollectionProducts>(
-            getCollectionProductsQuery,
-            { handle }
-        );
+        const response = await executeStorefrontQuery<ShopifyCollectionProducts>({
+            query: getCollectionProductsQuery,
+            variables: { handle }
+        });
         return response.collection.products.edges;
     } catch (error) {
         console.error(`Error prefetching products for collection ${handle}:`, error);

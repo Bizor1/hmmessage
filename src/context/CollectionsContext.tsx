@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { shopifyFetch } from '@/lib/shopify';
+import { executeStorefrontQuery } from '@/lib/shopifyClient';
 import { getCollectionsQuery } from '@/lib/shopify/queries';
 
 interface Collection {
@@ -27,13 +27,15 @@ export function CollectionsProvider({ children }: { children: React.ReactNode })
     useEffect(() => {
         async function fetchCollections() {
             try {
-                const response = await shopifyFetch<{
+                const response = await executeStorefrontQuery<{
                     collections: {
                         edges: Array<{
                             node: Collection;
                         }>;
                     };
-                }>(getCollectionsQuery);
+                }>({
+                    query: getCollectionsQuery
+                });
 
                 const fetchedCollections = response.collections.edges.map(({ node }) => node);
                 setCollections(fetchedCollections);

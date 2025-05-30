@@ -26,7 +26,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "worldelegantkp.com",
+        hostname: "mymessageclo.com",
       },
       {
         protocol: "https",

@@ -14,6 +14,8 @@
     "upload-specific": "ts-node --project tsconfig.scripts.json scripts/upload-specific.ts"
   },
   "dependencies": {
+    "@shopify/hydrogen-react": "^2025.5.0",
+    "@shopify/shopify-api": "^11.12.0",
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-query-devtools": "^5.76.0",
     "@types/canvas-confetti": "^1.9.0",

@@ -83,18 +83,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         </button>
                     </form>
 
-                    {/* Main Navigation Links */}
-                    <div className="border-t border-gray-100 pt-4">
-                        <div className="space-y-3">
-                            <Link href="/collections/all" className="block text-base" onClick={onClose}>
-                                Style
-                            </Link>
-                            <Link href="/products/washed-green-t-shirt" className="block text-base" onClick={onClose}>
-                                Elegance
-                            </Link>
-                        </div>
-                    </div>
-
                     {/* Shop Section */}
                     <div className="border-t border-gray-100 pt-4">
                         <h3 className="text-sm font-semibold uppercase mb-4">SHOP</h3>
