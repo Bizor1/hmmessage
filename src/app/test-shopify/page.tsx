@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { executeStorefrontQuery } from '@/lib/shopifyClient';
 
 // Simple test query to get shop information
@@ -77,9 +78,11 @@ export default function TestShopify() {
                     <p>Name: {shopInfo.shop.name}</p>
                     <p>Description: {shopInfo.shop.description}</p>
                     {shopInfo.shop.brand?.logo?.image?.url && (
-                        <img
+                        <Image
                             src={shopInfo.shop.brand.logo.image.url}
                             alt="Shop Logo"
+                            width={100}
+                            height={100}
                             className="mt-2 max-w-xs"
                         />
                     )}
