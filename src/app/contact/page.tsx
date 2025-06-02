@@ -70,10 +70,6 @@ export default function ContactPage() {
                         <h2 className="text-2xl font-semibold mb-6">Contact Information</h2>
                         <div className="space-y-8">
                             <div>
-                                <h3 className="text-lg font-medium mb-2">Customer Support</h3>
-                                <p className="text-gray-600">+44 7307 638132</p>
-                            </div>
-                            <div>
                                 <h3 className="text-lg font-medium mb-2">Social Media</h3>
                                 <div className="flex flex-col space-y-4">
                                     <a
@@ -97,11 +93,9 @@ export default function ContactPage() {
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-lg font-medium mb-2">Business Hours</h3>
+                                <h3 className="text-lg font-medium mb-2">Availability</h3>
                                 <p className="text-gray-600">
-                                    Monday - Friday: 9:00 AM - 6:00 PM (GMT)<br />
-                                    Saturday: 10:00 AM - 4:00 PM (GMT)<br />
-                                    Sunday: Closed
+                                    Available 24/7 for online orders and inquiries
                                 </p>
                             </div>
                         </div>

@@ -38,15 +38,11 @@ const shapes = [
 ];
 
 const quotes = [
-    "He who dwells in the shelter of the Most High will rest in the shadow of the Almighty. - Psalm 91:1",
-    "For he will command his angels concerning you to guard you in all your ways. - Psalm 91:11",
-    "Because he loves me, says the LORD, I will rescue him; I will protect him, for he acknowledges my name. - Psalm 91:14"
+    "He who dwells in the shelter of the Most High will rest in the shadow of the Almighty. - Psalm 91:1"
 ];
 
 const images = [
-    "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325441/mymessage/images/PHOTO-2025-04-29-10-42-31%20%281%29.jpg",
-    "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325441/mymessage/images/PHOTO-2025-04-29-10-42-31%20%281%29.jpg",
-    "https://res.cloudinary.com/duhfv8nqy/image/upload/v1748261631/WhatsApp_Image_2025-05-26_at_10.01.45_AM_ubyfjq.jpg"
+    "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747347372/WhatsApp_Image_2025-05-15_at_7.03.41_PM_w3wdak.jpg"
 ];
 
 // Animated text component with hover effect
