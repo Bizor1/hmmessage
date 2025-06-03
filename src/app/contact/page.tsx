@@ -73,7 +73,7 @@ export default function ContactPage() {
                                 <h3 className="text-lg font-medium mb-2">Social Media</h3>
                                 <div className="flex flex-col space-y-4">
                                     <a
-                                        href="https://www.instagram.com/mymessage.tm"
+                                        href="https://www.instagram.com/mymessage55?igsh=MWwydTZ6ZGlhOHhx"
                                         className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 hover:text-black hover:border-black transition-all duration-200"
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -82,7 +82,7 @@ export default function ContactPage() {
                                         Follow on Instagram
                                     </a>
                                     <a
-                                        href="https://www.tiktok.com/@mymessage.tm"
+                                        href="https://www.tiktok.com/@mymessageclo?_t=8%7CRfKxkVeQj&_r=1"
                                         className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 hover:text-black hover:border-black transition-all duration-200"
                                         target="_blank"
                                         rel="noopener noreferrer"

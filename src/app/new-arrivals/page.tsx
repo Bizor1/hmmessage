@@ -38,11 +38,27 @@ const shapes = [
 ];
 
 const quotes = [
-    "He who dwells in the shelter of the Most High will rest in the shadow of the Almighty. - Psalm 91:1"
+    "Rocks!",
+    "Effortless Style",
+    "Bold Expression"
 ];
 
 const images = [
     "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747347372/WhatsApp_Image_2025-05-15_at_7.03.41_PM_w3wdak.jpg"
+];
+
+// New products with front and back images
+const products = [
+    {
+        front: "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325443/mymessage/images/PHOTO-2025-04-29-10-42-32%20%282%29.jpg",
+        back: "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325445/mymessage/images/PHOTO-2025-04-29-10-42-32.jpg",
+        name: "Statement Tee"
+    },
+    {
+        front: "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325441/mymessage/images/PHOTO-2025-04-29-10-42-31%20%281%29.jpg",
+        back: "https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325442/mymessage/images/PHOTO-2025-04-29-10-42-31.jpg",
+        name: "Urban Essential"
+    }
 ];
 
 // Animated text component with hover effect
@@ -77,6 +93,73 @@ const AnimatedText = ({ text, isVisible }: { text: string; isVisible: boolean })
                 </motion.span>
             ))}
         </div>
+    );
+};
+
+// Product card component with front/back animation
+const ProductCard = ({ product, isVisible, index }: { product: any; isVisible: boolean; index: number }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{
+                opacity: isVisible ? 1 : 0,
+                x: isVisible ? 0 : 100
+            }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="mb-24"
+        >
+            <motion.div
+                className="relative aspect-[16/9] overflow-hidden rounded-lg shadow-2xl cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+            >
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={isHovered ? 'back' : 'front'}
+                        initial={{ opacity: 0, rotateY: -90 }}
+                        animate={{ opacity: 1, rotateY: 0 }}
+                        exit={{ opacity: 0, rotateY: 90 }}
+                        transition={{ duration: 0.6 }}
+                        className="absolute inset-0"
+                    >
+                        <Image
+                            src={isHovered ? product.back : product.front}
+                            alt={`${product.name} ${isHovered ? 'back' : 'front'}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </motion.div>
+                </AnimatePresence>
+
+                <motion.div
+                    className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                />
+
+                {/* Hover indicator */}
+                <motion.div
+                    className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <span className="text-white text-sm font-medium">↻</span>
+                </motion.div>
+            </motion.div>
+
+            <div className="mt-6 text-center italic text-lg">
+                <AnimatedText
+                    text={quotes[index + 1]}
+                    isVisible={isVisible}
+                />
+            </div>
+        </motion.div>
     );
 };
 
@@ -128,7 +211,7 @@ export default function NewArrivals() {
     }, []);
 
     useEffect(() => {
-        if (currentIndex >= 0 && currentIndex < images.length - 1) {
+        if (currentIndex >= 0 && currentIndex < images.length + products.length - 1) {
             const timer = setTimeout(() => {
                 setCurrentIndex(prev => prev + 1);
                 setShowPopup(true);
@@ -236,6 +319,18 @@ export default function NewArrivals() {
                             />
                         </div>
                     </motion.div>
+                ))}
+            </div>
+
+            {/* Product cards */}
+            <div className="max-w-4xl mx-auto px-4">
+                {products.map((product, index) => (
+                    <ProductCard
+                        key={index}
+                        product={product}
+                        isVisible={currentIndex >= images.length + index}
+                        index={index}
+                    />
                 ))}
             </div>
         </div>

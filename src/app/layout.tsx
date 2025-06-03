@@ -94,7 +94,7 @@ export default function RootLayout({
                           <h3 className="text-sm font-medium mb-4">Social</h3>
                           <div className="flex space-x-4">
                             <Link
-                              href="https://www.instagram.com/mymessage.tm"
+                              href="https://www.instagram.com/mymessage55?igsh=MWwydTZ6ZGlhOHhx"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center text-gray-700 hover:text-black transition-colors duration-200"
@@ -103,10 +103,10 @@ export default function RootLayout({
                               Instagram
                             </Link>
                             <Link
-                              href="https://www.tiktok.com/@mymessage.tm"
+                              href="https://www.tiktok.com/@mymessageclo?_t=8%7CRfKxkVeQj&_r=1"
+                              className="inline-flex items-center px-4 py-2 text-sm border border-gray-300 rounded-md hover:border-gray-400 transition-colors"
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center text-gray-700 hover:text-black transition-colors duration-200"
                             >
                               <FaTiktok className="w-5 h-5 mr-2" />
                               TikTok
