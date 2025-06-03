@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: "MYMESSAGE | Fashion Brand",
   description: "Premium fashion brand for the modern individual.",
   icons: {
-    icon: '/favicons/favicon.jpeg',
+    icon: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325319/mymessage/favicons/favicon.jpg',
   },
   openGraph: {
     title: "MYMESSAGE | Fashion Brand",
