@@ -424,7 +424,68 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                     </button>
                                     {activeSection === 'shipping' && (
                                         <div className="mt-4 prose prose-sm">
-                                            <p>Shipping and returns information would go here.</p>
+                                            <div className="space-y-6">
+                                                {/* Returns & Refunds Policy */}
+                                                <div>
+                                                    <h4 className="font-medium text-black mb-3">Returns & Refunds Policy</h4>
+                                                    <div className="space-y-2 text-sm text-gray-700">
+                                                        <p>We offer returns, refunds, size swaps (if stock is available).</p>
+                                                        <p>Please ensure you review your order before making a purchase to limit any errors.</p>
+
+                                                        <p className="font-medium mt-4 mb-2">Return Conditions:</p>
+                                                        <ul className="list-disc list-inside space-y-1">
+                                                            <li>The return must be sent back within 14 days of the delivery date</li>
+                                                            <li>The item must be in its original, unused, unaltered and unwashed condition</li>
+                                                            <li>The item must be returned with tags and packaging</li>
+                                                            <li>We do not cover the shipping cost of a returned item</li>
+                                                            <li>Please ensure to track your returned parcels through your selected courier to ensure parcel does not get lost, as we are not liable for lost returns</li>
+                                                        </ul>
+
+                                                        <p className="mt-3">Please contact us for returns forms.</p>
+                                                        <p>During the process of your return, if you have any enquiry about the product you are returning, please get in touch with the courier. For any other enquiries, please contact us.</p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Shipping Information */}
+                                                <div className="border-t border-gray-100 pt-4">
+                                                    <h4 className="font-medium text-black mb-3">Shipping Information</h4>
+                                                    <p className="text-sm text-gray-700 mb-4">Orders placed before 4pm will be packed and dispatched on the same day. If you order after 4pm, don&apos;t worry! Your order will be fulfilled and sent out on the following day.</p>
+
+                                                    <div className="space-y-4">
+                                                        {/* UK Shipping */}
+                                                        <div>
+                                                            <h5 className="font-medium text-black mb-2">UNITED KINGDOM</h5>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span>Evri Standard (3 to 4 days)</span>
+                                                                    <span className="font-medium text-green-600">Free</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span>Royal Mail Express/Evri (next day)</span>
+                                                                    <span>£3.99</span>
+                                                                </div>
+                                                                <p className="text-xs text-gray-600 italic">Free on orders over £100</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* USA Shipping */}
+                                                        <div>
+                                                            <h5 className="font-medium text-black mb-2">USA</h5>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span>Royal Mail Standard/Evri (4-5 Business Days)</span>
+                                                                    <span>£10.00</span>
+                                                                </div>
+                                                                <p className="text-xs text-gray-600 italic">Free on orders over £214 GBP</p>
+                                                                <div className="flex justify-between">
+                                                                    <span>Royal Mail Express/Evri (1-3 Business Days)</span>
+                                                                    <span>£12</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
