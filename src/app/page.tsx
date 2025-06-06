@@ -24,10 +24,10 @@ export default function Home() {
 
         {/* Hero content overlay */}
         <div className="relative flex flex-col items-center justify-center h-full text-center text-white px-4">
-          <div className="mb-4 text-xs uppercase tracking-widest">Coming Soon</div>
+          <div className="mb-4 text-xs uppercase tracking-widest"></div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-wide">Summer 25</h1>
           <div className="text-xl mb-8">
-            <span> ANTICIPATE</span>
+            <span> </span>
           </div>
           <Link
             href="/new-arrivals"
