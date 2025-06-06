@@ -17,14 +17,13 @@ export async function shopifyFetch<T>(
     query: string,
     variables: Record<string, unknown> = {}
 ): Promise<T> {
-    const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
     const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
-    if (!storeDomain || !storefrontAccessToken) {
-        throw new Error('Missing required environment variables NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_ACCESS_TOKEN');
+    if (!storefrontAccessToken) {
+        throw new Error('Missing required environment variable SHOPIFY_STOREFRONT_ACCESS_TOKEN');
     }
 
-    const endpoint = `https://${storeDomain}/api/2025-04/graphql.json`;
+    const endpoint = 'https://mymessageclothing.myshopify.com/api/2025-04/graphql.json';
 
     try {
         console.log('Making request to Shopify API:', endpoint);

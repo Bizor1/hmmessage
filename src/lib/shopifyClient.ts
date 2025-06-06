@@ -7,7 +7,7 @@ const formatDomain = (domain: string) => {
 
 // Initialize the Shopify Storefront client
 export const client = createStorefrontClient({
-  storeDomain: `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}`,
+  storeDomain: 'https://mymessageclothing.myshopify.com',
   publicStorefrontToken: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!,
   storefrontApiVersion: '2025-04',
 });

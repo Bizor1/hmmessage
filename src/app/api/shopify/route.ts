@@ -24,20 +24,10 @@ export async function POST(request: Request) {
     console.log('📦 Request body parsed successfully');
     console.log('Query length:', query?.length || 0);
     
-    const shop = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
     const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
     console.log('🔑 Environment variables check:');
-    console.log('Shop domain:', shop ? 'SET' : 'MISSING');
     console.log('Access token:', accessToken ? 'SET' : 'MISSING');
-
-    if (!shop) {
-      console.error('Missing NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN environment variable');
-      return NextResponse.json(
-        { error: 'Store configuration error' },
-        { status: 500 }
-      );
-    }
 
     if (!accessToken) {
       console.error('Missing SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variable');
@@ -47,11 +37,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Ensure the domain is properly formatted - remove protocol and trailing slashes
-    const formattedDomain = shop.replace(/^https?:\/\//, '').replace(/\/$/, '');
-    
-    // Construct the Shopify Storefront API endpoint with correct version
-    const shopifyUrl = `https://${formattedDomain}/api/2025-04/graphql.json`;
+    // Hardcoded Shopify URL
+    const shopifyUrl = 'https://mymessageclothing.myshopify.com/api/2025-04/graphql.json';
     console.log('Attempting to fetch from:', shopifyUrl);
 
     const response = await fetch(shopifyUrl, {
