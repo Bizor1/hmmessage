@@ -390,8 +390,13 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                     {activeSection === 'size' && (
                                         <div className="mt-4 prose prose-sm">
                                             {(() => {
+                                                console.log('DEBUG: Full descriptionHtml:', product.descriptionHtml);
+                                                console.log('DEBUG: Looking for SIZE CHART marker...');
                                                 const parts = product.descriptionHtml.split('SIZE CHART');
+                                                console.log('DEBUG: Split result length:', parts.length);
+                                                console.log('DEBUG: Split parts:', parts);
                                                 if (parts.length > 1) {
+                                                    console.log('DEBUG: Size chart content:', parts[1].trim());
                                                     return <div dangerouslySetInnerHTML={{ __html: parts[1].trim() }} />;
                                                 }
                                                 return <p>Size guide information will be available soon.</p>;

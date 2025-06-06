@@ -23,7 +23,20 @@ export const metadata: Metadata = {
   title: "MYMESSAGE | Fashion Brand",
   description: "Premium fashion brand for the modern individual.",
   icons: {
-    icon: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325319/mymessage/favicons/favicon.jpg',
+    icon: [
+      {
+        url: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1749215667/favicon_on1hyb.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1749215667/favicon_on1hyb.png',
+        sizes: '16x16',
+        type: 'image/png',
+      }
+    ],
+    shortcut: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1749215667/favicon_on1hyb.png',
+    apple: 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1749215667/favicon_on1hyb.png',
   },
   openGraph: {
     title: "MYMESSAGE | Fashion Brand",
