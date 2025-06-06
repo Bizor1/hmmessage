@@ -3,6 +3,10 @@ import { notFound } from 'next/navigation';
 import { shopifyFetch } from '@/lib/shopify';
 import ProductDetailsClient from '@/components/ProductDetailsClient';
 
+// Force dynamic rendering - no static generation
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Query to get product details including all images
 const getProductQuery = `
   query getProduct($handle: String!) {
