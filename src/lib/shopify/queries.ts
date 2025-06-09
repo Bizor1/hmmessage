@@ -1,7 +1,7 @@
 // Query to get all collections
 export const getCollectionsQuery = `
   query getCollections {
-    collections(first: 20) {
+    collections(first: 250) {
       edges {
         node {
           id
@@ -21,12 +21,15 @@ export const getCollectionProductsQuery = `
       id
       title
       description
-      products(first: 50) {
+      products(first: 250) {
         edges {
           node {
             id
             title
             handle
+            description
+            availableForSale
+            requiresSellingPlan
             priceRange {
               minVariantPrice {
                 amount
@@ -41,16 +44,31 @@ export const getCollectionProductsQuery = `
                 }
               }
             }
-            variants(first: 1) {
+            variants(first: 100) {
               edges {
                 node {
                   id
+                  title
+                  availableForSale
+                  price {
+                    amount
+                    currencyCode
+                  }
                   selectedOptions {
                     name
                     value
                   }
+                  image {
+                    url
+                    altText
+                  }
                 }
               }
+            }
+            options {
+              id
+              name
+              values
             }
           }
         }

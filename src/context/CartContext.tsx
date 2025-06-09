@@ -6,10 +6,14 @@ export interface CartItem {
     id: string;
     name: string;
     price: number;
+    quantity: number;
     imageUrl: string;
     href: string;
-    quantity: number;
-    variantTitle?: string;
+    selectedOptions?: Array<{
+        name: string;
+        value: string;
+    }>;
+    variantId?: string;
 }
 
 interface CartContextType {
@@ -35,10 +39,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const addToCart = useCallback((item: Omit<CartItem, 'quantity'>) => {
         setCartItems(prevItems => {
-            const existingItem = prevItems.find(i => i.id === item.id);
+            // Check if the exact variant already exists in cart
+            const existingItem = prevItems.find(i =>
+                i.variantId === item.variantId ||
+                (i.id === item.id && JSON.stringify(i.selectedOptions) === JSON.stringify(item.selectedOptions))
+            );
+
             if (existingItem) {
                 return prevItems.map(i =>
-                    i.id === item.id
+                    (i.variantId === item.variantId ||
+                        (i.id === item.id && JSON.stringify(i.selectedOptions) === JSON.stringify(item.selectedOptions)))
                         ? { ...i, quantity: i.quantity + 1 }
                         : i
                 );

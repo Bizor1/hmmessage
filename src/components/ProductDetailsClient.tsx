@@ -50,9 +50,11 @@ interface ProductDetailsProps {
 
 export default function ProductDetailsClient({ product }: ProductDetailsProps) {
     const [selectedSize, setSelectedSize] = useState('');
+    const [selectedFeature, setSelectedFeature] = useState('');
     const { addToCart, openCart } = useCart();
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const [availableSizes, setAvailableSizes] = useState<string[]>([]);
+    const [availableFeatures, setAvailableFeatures] = useState<string[]>([]);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -77,9 +79,22 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
 
         setAvailableSizes(sizes);
 
-        // Auto-select size if only one is available
+        // Get available clothing features from variants
+        const features = product.variants
+            .filter(variant => variant.availableForSale)
+            .map(variant =>
+                variant.selectedOptions.find(opt => opt.name.toLowerCase() === 'clothing features')?.value
+            )
+            .filter((feature): feature is string => feature !== undefined);
+
+        setAvailableFeatures(Array.from(new Set(features))); // Convert Set to Array
+
+        // Auto-select size and feature if only one is available
         if (sizes.length === 1) {
             setSelectedSize(sizes[0]);
+        }
+        if (features.length === 1) {
+            setSelectedFeature(features[0]);
         }
 
         return () => {
@@ -96,12 +111,20 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
             return;
         }
 
+        if (!selectedFeature && availableFeatures.length > 0) {
+            alert('Please select a style option');
+            return;
+        }
+
         const variant = product.variants.find(v =>
-            v.selectedOptions.some(opt => opt.value === selectedSize)
+            v.selectedOptions.every(opt =>
+                (opt.name.toLowerCase() === 'size' && opt.value === selectedSize) ||
+                (opt.name.toLowerCase() === 'clothing features' && opt.value === selectedFeature)
+            )
         );
 
         if (!variant) {
-            alert('Selected size is not available');
+            alert('Selected combination is not available');
             return;
         }
 
@@ -111,6 +134,10 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
             price: product.price,
             imageUrl: product.mainImages[0]?.url || '',
             href: window.location.pathname,
+            selectedOptions: [
+                { name: 'Size', value: selectedSize },
+                ...(selectedFeature ? [{ name: 'Style', value: selectedFeature }] : [])
+            ]
         });
         openCart();
     };
@@ -303,10 +330,10 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`
-                                    border py-2 px-4 text-sm
-                                    ${selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-200'}
-                                    ${isAvailable ? 'hover:border-black' : 'opacity-50 cursor-not-allowed'}
-                                `}
+                                                    border py-2 px-4 text-sm
+                                                    ${selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-200'}
+                                                    ${isAvailable ? 'hover:border-black' : 'opacity-50 cursor-not-allowed'}
+                                                `}
                                                 disabled={!isAvailable}
                                             >
                                                 {size}
@@ -318,6 +345,38 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                                     <p className="text-sm text-red-500">No sizes currently available</p>
                                 )}
                             </div>
+
+                            {/* Style Selection */}
+                            {availableFeatures.length > 0 && (
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center">
+                                        <label className="block text-sm font-medium">Style</label>
+                                        {availableFeatures.length === 1 && (
+                                            <span className="text-sm text-gray-500">Only style available</span>
+                                        )}
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        {product.options.find(opt => opt.name.toLowerCase() === 'clothing features')?.values.map((feature) => {
+                                            const isAvailable = availableFeatures.includes(feature);
+
+                                            return (
+                                                <button
+                                                    key={feature}
+                                                    onClick={() => setSelectedFeature(feature)}
+                                                    className={`
+                                                        border py-3 px-4 text-sm text-left
+                                                        ${selectedFeature === feature ? 'border-black bg-black text-white' : 'border-gray-200'}
+                                                        ${isAvailable ? 'hover:border-black' : 'opacity-50 cursor-not-allowed'}
+                                                    `}
+                                                    disabled={!isAvailable}
+                                                >
+                                                    {feature}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Add to Cart Button */}
                             <button

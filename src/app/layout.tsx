@@ -9,6 +9,7 @@ import { SidebarProvider } from "@/context/SidebarContext";
 import { CollectionsProvider } from '@/context/CollectionsContext'
 import CartSidebar from "@/components/CartSidebar";
 import ChatModal from "@/components/ChatModal";
+import NewCollectionPopup from "@/components/NewCollectionPopup";
 import { Providers } from './providers';
 import { FaInstagram, FaTiktok } from 'react-icons/fa';
 
@@ -77,6 +78,7 @@ export default function RootLayout({
                   <main>{children}</main>
                   <CartSidebar />
                   <ChatModal />
+                  <NewCollectionPopup />
                   <footer className="bg-white pt-16 pb-8">
                     <div className="container-represent">
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

@@ -31,9 +31,11 @@ export async function createShopifyCheckout(cartItems: CartItem[]) {
     try {
         // Transform cart items into Shopify line items
         const lineItems = cartItems.map(item => ({
-            merchandiseId: item.id, // This should be a Shopify variant ID
+            merchandiseId: item.variantId || item.id, // Use variantId if available, fallback to id
             quantity: item.quantity
         }));
+
+        console.log('Creating checkout with line items:', lineItems);
 
         // Create cart using Shopify Storefront API
         const response = await shopifyFetch<CartCreateResponse>(
@@ -44,6 +46,7 @@ export async function createShopifyCheckout(cartItems: CartItem[]) {
         );
 
         if (response.cartCreate.userErrors.length > 0) {
+            console.error('Shopify cart creation errors:', response.cartCreate.userErrors);
             throw new Error(response.cartCreate.userErrors[0].message);
         }
 

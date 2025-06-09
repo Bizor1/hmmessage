@@ -176,8 +176,18 @@ export default function CartSidebar() {
                                     <div className="flex-grow flex flex-col justify-between">
                                         <div>
                                             <Link href={item.href || '#'} className="text-sm font-medium hover:underline" onClick={closeCart}>{item.name}</Link>
-                                            <p className="text-xs text-gray-500 mt-1">{item.variantTitle || 'One Size'}</p>
-                                            <QuantitySelector item={item} updateQuantity={updateQuantity} />
+                                            {item.selectedOptions && item.selectedOptions.length > 0 && (
+                                                <div className="mt-1 space-y-0.5">
+                                                    {item.selectedOptions.map((option, index) => (
+                                                        <p key={index} className="text-xs text-gray-500">
+                                                            {option.name}: <span className="font-medium">{option.value}</span>
+                                                        </p>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            <div className="mt-2">
+                                                <QuantitySelector item={item} updateQuantity={updateQuantity} />
+                                            </div>
                                         </div>
                                         <p className="text-sm font-medium text-right">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.price)}</p>
                                     </div>

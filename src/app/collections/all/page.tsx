@@ -1,6 +1,7 @@
 import { shopifyFetch } from '@/lib/shopify';
 import { getCollectionsQuery, getCollectionProductsQuery } from '@/lib/shopify/queries';
 import CollectionClientLayout from '@/components/CollectionClientLayout';
+import { Metadata } from 'next';
 
 interface ShopifyProduct {
     id: string;
@@ -25,20 +26,35 @@ interface ShopifyProduct {
         edges: Array<{
             node: {
                 id: string;
+                title: string;
+                availableForSale: boolean;
+                selectedOptions: Array<{
+                    name: string;
+                    value: string;
+                }>;
             };
         }>;
     };
+    options: Array<{
+        name: string;
+        value: string;
+    }>;
 }
 
 interface CollectionResponse {
     collection?: {
-        products?: {
+        products: {
             edges: Array<{
                 node: ShopifyProduct;
             }>;
         };
     };
 }
+
+export const metadata: Metadata = {
+    title: 'All Products | 247',
+    description: 'Browse our complete collection of products',
+};
 
 async function getAllProducts() {
     try {
@@ -53,11 +69,19 @@ async function getAllProducts() {
             };
         }>(getCollectionsQuery);
 
-        // Then, fetch products from each collection
+        if (!collectionsResponse?.collections?.edges) {
+            console.error('No collections found');
+            return [];
+        }
+
+        // Then, fetch products from each collection in parallel
         const collections = collectionsResponse.collections.edges;
         const productsPromises = collections.map(({ node }) =>
             shopifyFetch<CollectionResponse>(getCollectionProductsQuery, {
                 handle: node.handle
+            }).catch(error => {
+                console.error(`Error fetching products for collection ${node.handle}:`, error);
+                return { collection: { products: { edges: [] } } };
             })
         );
 
@@ -69,28 +93,33 @@ async function getAllProducts() {
             if (response.collection?.products?.edges) {
                 response.collection.products.edges.forEach(({ node }) => {
                     if (!productsMap.has(node.id)) {
-                        // First try to find front/back images by URL
-                        const frontImage = node.images.edges.find(
-                            img => img.node.url.toLowerCase().includes('front')
-                        );
+                        // Get front/back images
+                        const images = node.images.edges;
+                        const frontImage = images.find(img =>
+                            img.node.url.toLowerCase().includes('front')
+                        ) || images[0];
+                        const backImage = images.find(img =>
+                            img.node.url.toLowerCase().includes('back')
+                        ) || images[1] || images[0];
 
-                        const backImage = node.images.edges.find(
-                            img => img.node.url.toLowerCase().includes('back')
-                        );
-
-                        // If we found both front and back images by URL, use them
-                        const imageUrlFront = frontImage?.node.url || node.images.edges[0]?.node.url || '';
-                        const imageUrlBack = backImage?.node.url || node.images.edges[1]?.node.url || node.images.edges[0]?.node.url || '';
+                        // Transform variants
+                        const variants = node.variants.edges.map(({ node: variant }) => ({
+                            id: variant.id,
+                            title: variant.title,
+                            availableForSale: variant.availableForSale,
+                            selectedOptions: variant.selectedOptions
+                        }));
 
                         productsMap.set(node.id, {
                             id: node.id,
                             name: node.title,
                             href: `/products/${node.handle}`,
-                            imageUrlFront,
-                            imageUrlBack,
+                            imageUrlFront: frontImage?.node.url || '',
+                            imageUrlBack: backImage?.node.url || '',
                             price: parseFloat(node.priceRange.minVariantPrice.amount),
                             currencyCode: node.priceRange.minVariantPrice.currencyCode,
-                            variantId: node.variants?.edges[0]?.node.id
+                            variants,
+                            options: node.options
                         });
                     }
                 });
@@ -100,7 +129,7 @@ async function getAllProducts() {
         return Array.from(productsMap.values());
     } catch (error) {
         console.error('Error fetching all products:', error);
-        throw error;
+        return [];
     }
 }
 
@@ -108,11 +137,13 @@ export default async function AllProductsPage() {
     const products = await getAllProducts();
 
     return (
-        <CollectionClientLayout
-            collectionName="All Products"
-            products={products}
-            description="Browse our complete collection of products"
-            productCount={products.length}
-        />
+        <div className="min-h-screen">
+            <CollectionClientLayout
+                collectionName="All Products"
+                products={products}
+                description="Browse our complete collection of products"
+                productCount={products.length}
+            />
+        </div>
     );
 } 

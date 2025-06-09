@@ -150,7 +150,7 @@ export async function exchangeCodeForToken(
             throw new Error(`Failed to exchange code for token: ${response.status} - ${errorBody}`);
         }
 
-        const tokenData: ShopifyOAuthTokenResponse = await response.json();
+        const tokenData = await response.json() as ShopifyOAuthTokenResponse;
         return tokenData;
 
     } catch (error) {

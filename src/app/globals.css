@@ -49,7 +49,7 @@ body.auth-page .nav-link-transparent {
 
 @layer components {
   .container-represent {
-    @apply w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-[2000px] mx-auto px-2 sm:px-3 lg:px-4;
   }
   
   .nav-link {
