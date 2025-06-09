@@ -92,7 +92,7 @@ export default function NewCollectionPopup() {
                     <div className="w-full md:w-1/2 p-6">
                         <h2 className="text-2xl font-bold mb-4 px-2">NEW COLLECTION</h2>
                         <h3 className="text-xl mb-4 px-2">DROPPED!!!</h3>
-                        <p className="text-gray-600 mb-6 px-2">John Thank</p>
+                        <p className="text-gray-600 mb-6 px-2">EXplore in arrivals</p>
 
                         <form onSubmit={handleSubmit} className="space-y-4 px-2">
                             <div>
