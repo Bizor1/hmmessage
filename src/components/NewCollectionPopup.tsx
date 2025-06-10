@@ -98,8 +98,8 @@ export default function NewCollectionPopup() {
                     {/* Content section */}
                     <div className="w-full md:w-1/2 p-6">
                         <h2 className="text-2xl font-bold mb-4 px-2">NEW COLLECTION</h2>
-                        <h3 className="text-xl mb-4 px-2">DROPPED!!!</h3>
-                        <p className="text-gray-600 mb-6 px-2">EXplore in arrivals</p>
+                        <h3 className="text-xl mb-4 px-2">DROPPING!!!</h3>
+                        <p className="text-gray-600 mb-6 px-2">Explore in arrivals</p>
 
                         <form onSubmit={handleSubmit} className="space-y-4 px-2">
                             <div>
