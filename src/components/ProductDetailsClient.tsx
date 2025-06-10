@@ -250,27 +250,32 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                         {/* Left side - Product Carousel and Images */}
                         <div className="space-y-4">
                             {/* Product Carousel */}
-                            <div className="h-[calc(100vh-5rem)] w-full relative">
+                            <div className="h-[calc(100vh-5rem)] w-full relative overflow-hidden">
                                 <Swiper
                                     key={isMobile ? 'mobile-swiper' : 'desktop-swiper'}
                                     {...swiperConfig}
-                                    className="h-full w-full product-swiper !p-0"
+                                    className="h-full w-full product-swiper !p-0 !m-0"
+                                    style={{
+                                        '--swiper-navigation-color': '#fff',
+                                        '--swiper-navigation-size': '24px'
+                                    } as React.CSSProperties}
                                 >
                                     {carouselImages.map((image, index) => (
-                                        <SwiperSlide key={index} className="!p-0">
-                                            <div className="relative h-full w-full">
+                                        <SwiperSlide key={index} className="!p-0 !m-0">
+                                            <div className="relative h-full w-full !p-0 !m-0">
                                                 <Image
                                                     src={image.url}
                                                     alt={image.altText || `Product image ${index + 1}`}
                                                     fill
-                                                    className="object-cover"
+                                                    className="object-cover !p-0 !m-0"
                                                     priority={index === 0}
+                                                    sizes="(max-width: 1024px) 100vw, 50vw"
                                                 />
                                             </div>
                                         </SwiperSlide>
                                     ))}
-                                    <div className="swiper-button-next"></div>
-                                    <div className="swiper-button-prev"></div>
+                                    <div className="swiper-button-next !right-2 !top-1/2 !transform !-translate-y-1/2 !bg-black/20 !w-10 !h-10 !rounded-full !flex !items-center !justify-center !backdrop-blur-sm hover:!bg-black/40 !transition-all"></div>
+                                    <div className="swiper-button-prev !left-2 !top-1/2 !transform !-translate-y-1/2 !bg-black/20 !w-10 !h-10 !rounded-full !flex !items-center !justify-center !backdrop-blur-sm hover:!bg-black/40 !transition-all"></div>
                                 </Swiper>
                             </div>
 
