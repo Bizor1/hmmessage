@@ -38,6 +38,8 @@ const getProductQuery = `
                 url
                 mimeType
                 format
+                height
+                width
               }
               previewImage {
                 url
@@ -91,6 +93,8 @@ interface ShopifyProduct {
                     url: string;
                     mimeType: string;
                     format: string;
+                    height: number;
+                    width: number;
                 }>;
                 previewImage?: {
                     url: string;

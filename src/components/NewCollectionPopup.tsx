@@ -10,12 +10,19 @@ export default function NewCollectionPopup() {
     const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
 
     useEffect(() => {
-        // Show popup after 5 seconds
-        const timer = setTimeout(() => {
-            setIsOpen(true);
-        }, 5000);
+        // Check if popup has already been shown in this session
+        const hasBeenShown = sessionStorage.getItem('newCollectionPopupShown');
 
-        return () => clearTimeout(timer);
+        if (!hasBeenShown) {
+            // Show popup after 5 seconds only if not shown before in this session
+            const timer = setTimeout(() => {
+                setIsOpen(true);
+                // Mark as shown in session storage
+                sessionStorage.setItem('newCollectionPopupShown', 'true');
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -92,7 +99,7 @@ export default function NewCollectionPopup() {
                     <div className="w-full md:w-1/2 p-6">
                         <h2 className="text-2xl font-bold mb-4 px-2">NEW COLLECTION</h2>
                         <h3 className="text-xl mb-4 px-2">DROPPED!!!</h3>
-                        <p className="text-gray-600 mb-6 px-2">John Thank</p>
+                        <p className="text-gray-600 mb-6 px-2">EXplore in arrivals</p>
 
                         <form onSubmit={handleSubmit} className="space-y-4 px-2">
                             <div>

@@ -2,8 +2,97 @@
 
 import Link from "next/link";
 import { CldImage } from 'next-cloudinary';
+import { useState, useEffect } from 'react';
+
+interface CollectionWithVideo {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  firstProductVideo: {
+    sources: Array<{
+      url: string;
+      mimeType: string;
+      format: string;
+      height: number;
+      width: number;
+    }>;
+    preview?: {
+      image?: {
+        url: string;
+      };
+    };
+  } | null;
+}
+
+interface CollectionsWithVideosResponse {
+  collections: CollectionWithVideo[];
+}
 
 export default function Home() {
+  const [collections, setCollections] = useState<CollectionWithVideo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchCollectionsWithMedia() {
+      try {
+        const response = await fetch('/api/collections-with-videos');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: CollectionsWithVideosResponse = await response.json();
+
+        console.log(`✅ Loaded ${data.collections.length} collections for home page`);
+
+        setCollections(data.collections);
+      } catch (error) {
+        console.error('Error fetching collections with media:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCollectionsWithMedia();
+  }, []);
+
+  // Get first video from a collection using admin API data
+  const getFirstVideoUrl = (collection: CollectionWithVideo): string | null => {
+    if (!collection.firstProductVideo || !collection.firstProductVideo.sources.length) {
+      return null;
+    }
+
+    const video = collection.firstProductVideo;
+    console.log(`\n🔍 ADMIN API VIDEO for ${collection.title}:`);
+    console.log('Available sources:', video.sources.length);
+
+    video.sources.forEach((source: any, index: number) => {
+      console.log(`  Source ${index + 1}:`);
+      console.log(`    URL: ${source.url}`);
+      console.log(`    Format: ${source.format}`);
+      console.log(`    MIME: ${source.mimeType}`);
+      console.log(`    Size: ${source.width}x${source.height}`);
+    });
+
+    // Check if there's a preview image
+    if (video.preview?.image?.url) {
+      console.log(`Preview image: ${video.preview.image.url}`);
+    }
+
+    // Use proxy for the video to handle CORS
+    const firstSourceUrl = video.sources[0].url;
+    const proxyUrl = `/api/video/proxy?url=${encodeURIComponent(firstSourceUrl)}`;
+    console.log(`Using proxy URL: ${proxyUrl}`);
+
+    return proxyUrl;
+  };
+
+  // Fallback videos for collections without videos
+  const fallbackVideos = [
+    "https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345551/WhatsApp_Video_2025-05-15_at_10.52.41_AM_gzpmqj.mp4",
+    "https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345542/WhatsApp_Video_2025-05-15_at_10.52.41_AM_1_kz90gp.mp4",
+    "https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345540/WhatsApp_Video_2025-05-15_at_10.52.42_AM_rca8pk.mp4"
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero section */}
@@ -68,211 +157,76 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Under His Shelter Collection - Video Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345551/WhatsApp_Video_2025-05-15_at_10.52.41_AM_gzpmqj.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* Subtle gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
-        </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="space-y-3 md:space-y-4 mb-6">
-            <Link
-              href="/collections/t-shirts"
-              className="block text-xl md:text-3xl font-medium uppercase opacity-100"
-            >
-              T-shirts
-            </Link>
-            <Link
-              href="/collections/hoodie"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >Hoodie
-            </Link>
-            <Link
-              href="/collections/sweatshirt"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Sweatshirt
-            </Link>
-            <Link
-              href="/collections/shorts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Shorts
-            </Link>
-          </div>
-          <Link
-            href="/collections/all"
-            className="btn-underline"
-          >
-            <span className="mr-2">→</span> DISCOVER
-          </Link>
-        </div>
-      </section>
+      {/* Dynamic Collection Video Sections */}
+      {!isLoading && collections.map((collection, index) => {
+        const shopifyVideoUrl = getFirstVideoUrl(collection);
+        // Use fallback video if Shopify video doesn't exist or fails
+        const videoUrl = shopifyVideoUrl || fallbackVideos[index % fallbackVideos.length];
 
-      {/* 247 Collection - Video Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345542/WhatsApp_Video_2025-05-15_at_10.52.41_AM_1_kz90gp.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* Subtle gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
-        </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="space-y-3 md:space-y-4 mb-6">
-            <Link
-              href="/collections/t-shirts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              T-shirts           </Link>
-            <Link
-              href="/collections/hoodie"
-              className="block text-xl md:text-3xl font-medium uppercase opacity-100"
-            >
-              Hoodies
-            </Link>
-            <Link
-              href="/collections/sweatshirt"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Sweatshirt
-            </Link>
-            <Link
-              href="/collections/shorts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Shorts
-            </Link>
-          </div>
-          <Link
-            href="/collections/hoodie"
-            className="btn-underline"
-          >
-            <span className="mr-2">→</span> DISCOVER
-          </Link>
-        </div>
-      </section>
+        // Use the actual collections in the order they were fetched
+        const allCollections = collections.map(col => ({
+          title: col.title,
+          href: `/collections/${col.handle}`,
+          handle: col.handle
+        }));
 
-      {/* Woman Collection - Video Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345540/WhatsApp_Video_2025-05-15_at_10.52.42_AM_rca8pk.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* Subtle gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
-        </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="space-y-3 md:space-y-4 mb-6">
-            <Link
-              href="/collections/t-shirts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              T-shirt
-            </Link>
-            <Link
-              href="/collections/hoodie"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Hoodies
-            </Link>
-            <Link
-              href="/collections/sweatshirt"
-              className="block text-xl md:text-3xl font-medium uppercase opacity-100"
-            >
-              Sweatshirt
-            </Link>
-            <Link
-              href="/collections/shorts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Shorts
-            </Link>
-          </div>
-          <Link
-            href="/collections/sweatshirt"
-            className="btn-underline"
-          >
-            <span className="mr-2">→</span> DISCOVER
-          </Link>
-        </div>
-      </section>
+        // Determine which collection should be highlighted (current one)
+        const currentCollectionHandle = collection.handle;
 
-      {/* Initial Collection - Video Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="https://res.cloudinary.com/duhfv8nqy/video/upload/v1748345542/WhatsApp_Video_2025-05-15_at_10.52.41_AM_1_kz90gp.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* Subtle gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
-        </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <div className="space-y-3 md:space-y-4 mb-6">
-            <Link
-              href="/collections/t-shirts"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              T-shirts
-            </Link>
-            <Link
-              href="/collections/hoodie"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Hoodies
-            </Link>
-            <Link
-              href="/collections/long-sleeve-tee"
-              className="block text-lg md:text-2xl font-medium uppercase opacity-60 hover:opacity-100 transition-opacity"
-            >
-              Long Sleeve Tee
-            </Link>
-            <Link
-              href="/collections/shorts"
-              className="block text-xl md:text-3xl font-medium uppercase opacity-100"
-            >
-              Shorts
-            </Link>
+        return (
+          <section key={collection.id} className="relative w-full h-screen overflow-hidden">
+            <div className="absolute inset-0">
+              <video
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                onError={() => {
+                  // Fallback is already handled above, no need to log
+                }}
+              >
+                <source src={videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              {/* Subtle gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-black/30"></div>
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+              <div className="space-y-3 md:space-y-4 mb-6">
+                {allCollections.map((col) => (
+                  <Link
+                    key={col.handle}
+                    href={col.href}
+                    className={`block font-medium uppercase transition-opacity ${col.handle === currentCollectionHandle
+                      ? 'text-xl md:text-3xl opacity-100'
+                      : 'text-lg md:text-2xl opacity-60 hover:opacity-100'
+                      }`}
+                  >
+                    {col.title}
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href={`/collections/${collection.handle}`}
+                className="btn-underline"
+              >
+                <span className="mr-2">→</span> DISCOVER
+              </Link>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* Loading state for video sections */}
+      {isLoading && (
+        <section className="relative w-full h-screen overflow-hidden">
+          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-gray-500">Loading collections...</div>
           </div>
-          <Link
-            href="/collections/shorts"
-            className="btn-underline"
-          >
-            <span className="mr-2">→</span> DISCOVER
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

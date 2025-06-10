@@ -18,6 +18,24 @@ interface ProductMedia {
     previewUrl?: string;
 }
 
+interface AdminVideo {
+    id: string;
+    alt?: string;
+    mediaContentType: string;
+    sources: Array<{
+        url: string;
+        mimeType: string;
+        format: string;
+        height: number;
+        width: number;
+    }>;
+    preview?: {
+        image?: {
+            url: string;
+        };
+    };
+}
+
 interface ProductVariant {
     id: string;
     title: string;
@@ -56,6 +74,8 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
     const [availableSizes, setAvailableSizes] = useState<string[]>([]);
     const [availableFeatures, setAvailableFeatures] = useState<string[]>([]);
     const [isMobile, setIsMobile] = useState(false);
+    const [adminVideos, setAdminVideos] = useState<AdminVideo[]>([]);
+    const [videosLoading, setVideosLoading] = useState(true);
 
     useEffect(() => {
         const checkMobile = () => {
@@ -104,6 +124,55 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
             }
         };
     }, [product.mainImages, product.variants]);
+
+    // Fetch admin videos for this product
+    useEffect(() => {
+        async function fetchAdminVideos() {
+            try {
+                setVideosLoading(true);
+
+                // Extract handle from the current URL or use a handle prop if available
+                const handle = window.location.pathname.split('/').pop();
+
+                if (!handle) {
+                    console.log('No product handle found');
+                    setVideosLoading(false);
+                    return;
+                }
+
+                console.log(`Fetching admin videos for product handle: ${handle}`);
+
+                const response = await fetch(`/api/product-videos/${handle}`);
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        console.log('Product not found in admin API');
+                    } else {
+                        console.error('Failed to fetch admin videos:', response.status);
+                    }
+                    setVideosLoading(false);
+                    return;
+                }
+
+                const data = await response.json() as {
+                    productId: string;
+                    productTitle: string;
+                    productHandle: string;
+                    videos: AdminVideo[];
+                };
+
+                console.log(`Admin API: Found ${data.videos.length} videos for ${data.productTitle}`);
+                setAdminVideos(data.videos);
+
+            } catch (error) {
+                console.error('Error fetching admin videos:', error);
+            } finally {
+                setVideosLoading(false);
+            }
+        }
+
+        fetchAdminVideos();
+    }, []);
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -154,139 +223,141 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
             clickable: true,
             type: 'bullets'
         },
-        navigation: false,
+        navigation: {
+            enabled: true,
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
         autoplay: {
             delay: 3000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-                autoplay: false,
-                navigation: {
-                    enabled: true,
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev'
-                }
-            }
         }
     };
 
-    // Get the first three images for the carousel
-    const carouselImages = product.mainImages
-        .filter(media => media.type === 'image')
-        .slice(0, 3);
-
-    // Get the fourth image if it exists (will be undefined if not enough images)
-    const fourthImage = product.mainImages
-        .filter(media => media.type === 'image')[3];
-
-    // Get remaining images after the fourth (for the "Additional Product Images" section)
-    const remainingImages = product.mainImages
-        .filter(media => media.type === 'image')
-        .slice(4);
+    // Get all images for the carousel (main images + detail images)
+    const carouselImages = [
+        ...product.mainImages.filter(media => media.type === 'image'),
+        ...product.detailImages.filter(media => media.type === 'image')
+    ];
 
     return (
         <div className="min-h-screen flex flex-col">
-            {/* Product Carousel */}
-            <div className="h-[50vh] md:h-[calc(100vh-4rem)] w-full relative bg-gray-50 mt-16">
-                <Swiper
-                    key={isMobile ? 'mobile-swiper' : 'desktop-swiper'}
-                    {...swiperConfig}
-                    className="h-full w-full product-swiper"
-                >
-                    {carouselImages.map((image, index) => (
-                        <SwiperSlide key={index}>
-                            <div className="relative h-full w-full">
-                                <Image
-                                    src={image.url}
-                                    alt={image.altText || `Product image ${index + 1}`}
-                                    fill
-                                    className="object-contain"
-                                    priority={index === 0}
-                                />
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                    <div className="swiper-button-next"></div>
-                    <div className="swiper-button-prev"></div>
-                </Swiper>
-            </div>
-
-            {/* Scrollable content */}
-            <div className="min-h-screen bg-white">
+            {/* Main Product Layout - Side by Side */}
+            <div className="min-h-screen bg-white mt-1">
                 <div className="container-represent py-12">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                        {/* Left side - Videos and Detail Images */}
-                        <div className="space-y-8">
-                            {/* Single Video or 4th Image Section - This section renders AT MOST ONE item */}
-                            {(() => {
-                                const videos = product.mainImages.filter(media => media.type === 'video');
-
-                                if (videos.length > 0) {
-                                    const video = videos[0]; // Display only the first video
-                                    return (
-                                        <div className="relative aspect-video rounded-lg overflow-hidden">
-                                            <video
-                                                src={video.url}
-                                                poster={video.previewUrl}
-                                                autoPlay
-                                                loop
-                                                muted
-                                                playsInline
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-                                    );
-                                }
-                                // If no video, display the single fourthImage if it exists
-                                else if (fourthImage) {
-                                    return (
-                                        <div className="relative aspect-square rounded-lg overflow-hidden">
-                                            <Image
-                                                src={fourthImage.url}
-                                                alt={fourthImage.altText || 'Product image 4'}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                    );
-                                }
-                                return null; // No video and no fourth image
-                            })()}
-
-                            {/* Additional Product Images - Renders images from the 5th one onwards */}
-                            {remainingImages.length > 0 && (
-                                <div className="space-y-4">
-                                    {remainingImages.map((image, index) => (
-                                        <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
-                                            <Image
-                                                src={image.url}
-                                                alt={image.altText || `Additional image ${index + 1}`}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                        {/* Left side - Product Carousel and Images */}
+                        <div className="space-y-4">
+                            {/* Product Carousel */}
+                            <div className="h-[calc(100vh-5rem)] w-full relative">
+                                <Swiper
+                                    key={isMobile ? 'mobile-swiper' : 'desktop-swiper'}
+                                    {...swiperConfig}
+                                    className="h-full w-full product-swiper !p-0"
+                                >
+                                    {carouselImages.map((image, index) => (
+                                        <SwiperSlide key={index} className="!p-0">
+                                            <div className="relative h-full w-full">
+                                                <Image
+                                                    src={image.url}
+                                                    alt={image.altText || `Product image ${index + 1}`}
+                                                    fill
+                                                    className="object-cover"
+                                                    priority={index === 0}
+                                                />
+                                            </div>
+                                        </SwiperSlide>
                                     ))}
+                                    <div className="swiper-button-next"></div>
+                                    <div className="swiper-button-prev"></div>
+                                </Swiper>
+                            </div>
+
+                            {/* Videos Section - Admin API Videos with autoplay */}
+                            {videosLoading && (
+                                <div className="space-y-4">
+                                    <div className="text-sm text-gray-500">Loading videos...</div>
                                 </div>
                             )}
 
-                            {/* Detail Images */}
-                            {product.detailImages.length > 0 && (
-                                <div className="space-y-4 mt-8">
-                                    {product.detailImages
-                                        .filter(media => media.type === 'image')
-                                        .map((image, index) => (
-                                            <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
-                                                <Image
-                                                    src={image.url}
-                                                    alt={image.altText || `Detail image ${index + 1}`}
-                                                    fill
-                                                    className="object-cover"
-                                                />
+                            {!videosLoading && adminVideos.length > 0 && (
+                                <div className="space-y-4">
+                                    {adminVideos.map((video, index) => {
+                                        // Get the best quality source
+                                        const getBestSource = () => {
+                                            if (!video.sources.length) return null;
+
+                                            // Sort by resolution (highest first)
+                                            const sortedSources = [...video.sources].sort((a, b) => {
+                                                const aRes = a.height * a.width;
+                                                const bRes = b.height * b.width;
+                                                return bRes - aRes;
+                                            });
+
+                                            return sortedSources[0];
+                                        };
+
+                                        const bestSource = getBestSource();
+                                        if (!bestSource) return null;
+
+                                        // Create proxy URL
+                                        const proxyVideoUrl = `/api/video/proxy?url=${encodeURIComponent(bestSource.url)}`;
+                                        const previewImage = video.preview?.image?.url;
+
+                                        console.log(`Rendering admin video ${index + 1}:`, {
+                                            originalUrl: bestSource.url,
+                                            proxyUrl: proxyVideoUrl,
+                                            resolution: `${bestSource.width}x${bestSource.height}`,
+                                            format: bestSource.format
+                                        });
+
+                                        return (
+                                            <div key={video.id} className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
+                                                <video
+                                                    poster={previewImage}
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    crossOrigin="anonymous"
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        console.error(`Admin video ${index + 1} failed to load:`, {
+                                                            proxyUrl: proxyVideoUrl,
+                                                            originalUrl: bestSource.url
+                                                        });
+
+                                                        // Try direct URL as fallback
+                                                        const videoElement = e.target as HTMLVideoElement;
+                                                        if (videoElement.src === proxyVideoUrl) {
+                                                            console.log(`Trying direct URL for video ${index + 1}`);
+                                                            videoElement.src = bestSource.url;
+                                                        }
+                                                    }}
+                                                    onLoadStart={() => {
+                                                        console.log(`Admin video ${index + 1} loading started`);
+                                                    }}
+                                                    onCanPlay={() => {
+                                                        console.log(`Admin video ${index + 1} can play - autoplaying...`);
+                                                    }}
+                                                    onPlay={() => {
+                                                        console.log(`Admin video ${index + 1} started playing`);
+                                                    }}
+                                                >
+                                                    <source src={proxyVideoUrl} type={bestSource.mimeType} />
+                                                    <source src={bestSource.url} type={bestSource.mimeType} />
+                                                    Your browser does not support the video tag.
+                                                </video>
                                             </div>
-                                        ))}
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {!videosLoading && adminVideos.length === 0 && (
+                                <div className="space-y-4">
+                                    <div className="text-sm text-gray-500">No videos available for this product</div>
                                 </div>
                             )}
                         </div>
