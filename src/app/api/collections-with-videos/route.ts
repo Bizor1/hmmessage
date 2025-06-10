@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic behavior to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Use the correct domain we discovered from the redirect testing
 const ADMIN_API_URL = 'https://world-elegant-kp.myshopify.com/admin/api/2024-10/graphql.json';
 const ADMIN_ACCESS_TOKEN = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
@@ -57,8 +61,12 @@ export async function GET() {
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Access-Token': ADMIN_ACCESS_TOKEN,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       },
       body: JSON.stringify(collectionsQuery),
+      cache: 'no-store'
     });
 
     if (!collectionsResponse.ok) {
@@ -135,8 +143,12 @@ export async function GET() {
         headers: {
           'Content-Type': 'application/json',
           'X-Shopify-Access-Token': ADMIN_ACCESS_TOKEN,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         },
         body: JSON.stringify(productsQuery),
+        cache: 'no-store'
       });
 
       if (productsResponse.ok) {
@@ -191,9 +203,16 @@ export async function GET() {
 
     console.log(`Processed ${collectionsWithVideos.length} collections, ${collectionsWithVideos.filter(c => c.firstProductVideo).length} have videos`);
 
-    return NextResponse.json({
+    const jsonResponse = NextResponse.json({
       collections: collectionsWithVideos
     });
+
+    // Add cache control headers to prevent any caching
+    jsonResponse.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    jsonResponse.headers.set('Pragma', 'no-cache');
+    jsonResponse.headers.set('Expires', '0');
+    
+    return jsonResponse;
 
   } catch (error) {
     console.error('Collections with videos API error:', error);

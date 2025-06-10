@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic behavior to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Use the correct domain we discovered from the redirect testing
 const ADMIN_API_URL = 'https://world-elegant-kp.myshopify.com/admin/api/2024-10/graphql.json';
 const ADMIN_ACCESS_TOKEN = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN;
@@ -78,8 +82,12 @@ export async function GET(
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Access-Token': ADMIN_ACCESS_TOKEN,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       },
       body: JSON.stringify(query),
+      cache: 'no-store'
     });
 
     if (!response.ok) {
@@ -142,12 +150,19 @@ export async function GET(
       });
     }
 
-    return NextResponse.json({
+    const jsonResponse = NextResponse.json({
       productId: product.id,
       productTitle: product.title,
       productHandle: product.handle,
       videos: videos
     });
+
+    // Add cache control headers to prevent any caching
+    jsonResponse.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    jsonResponse.headers.set('Pragma', 'no-cache');
+    jsonResponse.headers.set('Expires', '0');
+    
+    return jsonResponse;
 
   } catch (error) {
     console.error('Product videos API error:', error);

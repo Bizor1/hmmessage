@@ -76,6 +76,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
     const [isMobile, setIsMobile] = useState(false);
     const [adminVideos, setAdminVideos] = useState<AdminVideo[]>([]);
     const [videosLoading, setVideosLoading] = useState(true);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         const checkMobile = () => {
@@ -142,7 +143,17 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
 
                 console.log(`Fetching admin videos for product handle: ${handle}`);
 
-                const response = await fetch(`/api/product-videos/${handle}`);
+                // Add cache-busting parameter and headers for fresh data
+                const cacheBuster = Date.now();
+                const response = await fetch(`/api/product-videos/${handle}?t=${cacheBuster}`, {
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    },
+                    cache: 'no-store'
+                });
 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -172,7 +183,11 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
         }
 
         fetchAdminVideos();
-    }, []);
+    }, [refreshTrigger]);
+
+    const refreshVideos = () => {
+        setRefreshTrigger(prev => prev + 1);
+    };
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -283,6 +298,22 @@ export default function ProductDetailsClient({ product }: ProductDetailsProps) {
                             {videosLoading && (
                                 <div className="space-y-4">
                                     <div className="text-sm text-gray-500">Loading videos...</div>
+                                </div>
+                            )}
+
+                            {!videosLoading && adminVideos.length > 0 && (
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-sm text-gray-600">{adminVideos.length} video{adminVideos.length > 1 ? 's' : ''}</span>
+                                    <button
+                                        onClick={refreshVideos}
+                                        className="text-xs text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1"
+                                        title="Refresh videos"
+                                    >
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        Refresh
+                                    </button>
                                 </div>
                             )}
 

@@ -36,7 +36,17 @@ export default function Home() {
   useEffect(() => {
     async function fetchCollectionsWithMedia() {
       try {
-        const response = await fetch('/api/collections-with-videos');
+        // Add cache-busting parameter and headers for fresh data
+        const cacheBuster = Date.now();
+        const response = await fetch(`/api/collections-with-videos?t=${cacheBuster}`, {
+          method: 'GET',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          },
+          cache: 'no-store'
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
