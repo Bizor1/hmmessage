@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { CldImage } from 'next-cloudinary';
 import { useState, useEffect } from 'react';
+import CountdownDisplay from '@/components/CountdownDisplay';
+import DropShowcase from '@/components/DropShowcase';
+import FashionCountdown from '@/components/FashionCountdown';
+import { useDropCountdown } from '@/hooks/useCountdown';
 
 interface CollectionWithVideo {
   id: string;
@@ -32,6 +36,7 @@ interface CollectionsWithVideosResponse {
 export default function Home() {
   const [collections, setCollections] = useState<CollectionWithVideo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isExpired } = useDropCountdown();
 
   useEffect(() => {
     async function fetchCollectionsWithMedia() {
@@ -136,6 +141,9 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* SOPHISTICATED FASHION COUNTDOWN - Moved up after hero section */}
+      {!isExpired && <FashionCountdown />}
 
       {/* Full-height fashion image section */}
       <section className="relative w-full h-screen overflow-hidden">

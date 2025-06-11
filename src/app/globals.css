@@ -14,6 +14,13 @@
   }
 }
 
+/* Reset default browser margins/padding */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -180,5 +187,126 @@ body.auth-page .nav-link-transparent {
 
   .product-details-header .nav-link {
     @apply text-black;
+  }
+
+  /* Countdown animations */
+  .countdown-number {
+    animation: countdownPulse 1s ease-in-out infinite;
+  }
+
+  .countdown-number-mega {
+    animation: megaPulse 1.5s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+
+  @keyframes countdownPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes megaPulse {
+    0%, 100% {
+      transform: scale(1);
+      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+    50% {
+      transform: scale(1.1);
+      text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 165, 0, 0.6);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-delay {
+    animation: fadeIn 1s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeIn 1s ease-out 0.6s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 1s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Countdown overlay styles */
+  .countdown-overlay {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Gradient text effects */
+  .gradient-text-glow {
+    background: linear-gradient(45deg, #ef4444, #f97316, #ef4444);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease-in-out infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes backgroundMove {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(50px, 50px);
+    }
   }
 }

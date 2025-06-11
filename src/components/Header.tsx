@@ -8,8 +8,10 @@ import Sidebar from "./Sidebar";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useSidebar } from "@/context/SidebarContext";
+import { useDropCountdown } from "@/hooks/useCountdown";
 import MobileMenu from "./MobileMenu";
 import SearchButton from './SearchButton';
+import CountdownDisplay from './CountdownDisplay';
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
@@ -20,6 +22,7 @@ export default function Header() {
     const { openCart, itemCount } = useCart();
     const { isAuthenticated } = useAuth();
     const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
+    const { isExpired } = useDropCountdown();
 
     const isCollectionPage = pathname.startsWith('/collections/');
     const isProductPage = pathname.startsWith('/products/');
@@ -64,6 +67,9 @@ export default function Header() {
     const headerBgClass = useSolidStyle ? "bg-white" : "bg-transparent";
     const logoTextColor = useSolidStyle ? "text-black" : "text-white";
 
+    // Dynamic header position based on countdown state
+    const headerTopClass = isExpired ? "top-0" : "top-8";
+
     const imageSrc = hoveredCategory === 'men'
         ? 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325553/mymessage/images/WhatsApp%20Image%202025-05-14%20at%2012.29.28%20PM.jpg'
         : 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325322/mymessage/images/1.jpg';
@@ -92,7 +98,7 @@ export default function Header() {
                 )}
             </div>
 
-            <div className={`sticky top-0 left-0 right-0 z-50 ${headerBgClass} transition-colors duration-300 ease-in-out`}>
+            <div className={`sticky ${headerTopClass} left-0 right-0 z-50 ${headerBgClass} transition-all duration-300 ease-in-out`}>
                 <header className={`absolute w-full ${headerBgClass} transition-colors duration-300 ease-in-out`}>
                     <div className="container-represent">
                         <div className="flex justify-between items-center h-16">
@@ -180,8 +186,8 @@ export default function Header() {
                             <div className="flex items-center space-x-4">
                                 {/* Desktop Right navigation - Hidden below md */}
                                 <nav className="hidden md:flex items-center space-x-4">
-
-
+                                    {/* Compact countdown - only show when active */}
+                                    <CountdownDisplay variant="compact" showTitle={false} className={`${linkClassName} transition-opacity duration-300`} />
 
                                     <Link href="/about" className={linkClassName}>
                                         About

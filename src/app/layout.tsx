@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Header from "@/components/Header";
+import HypeBanner from "@/components/HypeBanner";
+import DynamicMain from "@/components/DynamicMain";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { SidebarProvider } from "@/context/SidebarContext";
@@ -74,8 +76,9 @@ export default function RootLayout({
             <CartProvider>
               <SidebarProvider>
                 <CollectionsProvider>
+                  <HypeBanner />
                   <Header />
-                  <main>{children}</main>
+                  <DynamicMain>{children}</DynamicMain>
                   <CartSidebar />
                   <ChatModal />
                   <NewCollectionPopup />

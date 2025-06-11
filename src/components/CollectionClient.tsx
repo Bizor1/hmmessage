@@ -2,10 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
+import { useState } from 'react';
 import { shopifyFetch } from '@/lib/shopify';
 import { getCollectionProductsQuery } from '@/lib/shopify/queries';
 import ProductGrid from './ProductGrid';
 import LoadingSpinner from './LoadingSpinner';
+import SophisticatedCollectionOverlay from './SophisticatedCollectionOverlay';
 
 interface ShopifyResponse {
     collection: {
@@ -50,6 +52,8 @@ interface CollectionClientProps {
 }
 
 export default function CollectionClient({ handle }: CollectionClientProps) {
+    const [showOverlay, setShowOverlay] = useState(true);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['collection', handle],
         queryFn: async () => {
@@ -92,11 +96,19 @@ export default function CollectionClient({ handle }: CollectionClientProps) {
     });
 
     return (
-        <div className="pt-32">
-            <div className="container-represent">
-                <h1 className="text-2xl font-medium mb-8">{data.title}</h1>
-                <ProductGrid products={products} />
+        <>
+            {showOverlay && (
+                <SophisticatedCollectionOverlay
+                    collectionHandle={handle}
+                    onClose={() => setShowOverlay(false)}
+                />
+            )}
+            <div className="pt-32">
+                <div className="container-represent">
+                    <h1 className="text-2xl font-medium mb-8">{data.title}</h1>
+                    <ProductGrid products={products} />
+                </div>
             </div>
-        </div>
+        </>
     );
 } 

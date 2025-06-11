@@ -4,7 +4,19 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useCollections } from '@/context/CollectionsContext';
+import { useDropCountdown } from '@/hooks/useCountdown';
 import { useRouter } from 'next/navigation';
+
+// Collections that have active drops
+const DROP_COLLECTIONS = [
+    'long-sleeve-tee',
+    'long-sleeve-tees',
+    'longsleeve',
+    'longsleeve-tee',
+    'shorts',
+    'carpenter-shorts',
+    'modular-message-shorts'
+];
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -14,8 +26,17 @@ interface MobileMenuProps {
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     const { } = useCart();
     const { collections } = useCollections();
+    const { isExpired } = useDropCountdown();
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
+
+    const hasActiveDrop = (collectionHandle: string) => {
+        if (isExpired) return false;
+        return DROP_COLLECTIONS.some(dropHandle =>
+            collectionHandle.toLowerCase().includes(dropHandle) ||
+            dropHandle.includes(collectionHandle.toLowerCase())
+        );
+    };
 
     if (!isOpen) return null;
 
@@ -87,20 +108,28 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <div className="border-t border-gray-100 pt-4">
                         <h3 className="text-sm font-semibold uppercase mb-4">SHOP</h3>
                         <div className="space-y-3">
-                            <Link href="/new-arrivals" className="block text-base" onClick={onClose}>
+                            <Link href="/new-arrivals" className="block text-base py-2" onClick={onClose}>
                                 New Arrivals
                             </Link>
-                            <Link href="/collections/all" className="block text-base" onClick={onClose}>
+                            <Link href="/collections/all" className="block text-base py-2" onClick={onClose}>
                                 All Products
                             </Link>
                             {collections?.map((collection) => (
                                 <Link
                                     key={collection.id}
                                     href={`/collections/${collection.handle}`}
-                                    className="block text-base"
+                                    className="flex items-center justify-between py-2 group"
                                     onClick={onClose}
                                 >
-                                    {collection.title}
+                                    <span className="text-base">{collection.title}</span>
+                                    {hasActiveDrop(collection.handle) && (
+                                        <div className="flex items-center gap-2">
+                                            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium uppercase tracking-wide animate-pulse">
+                                                DROP
+                                            </span>
+                                            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                                        </div>
+                                    )}
                                 </Link>
                             ))}
                         </div>
@@ -110,13 +139,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <div className="border-t border-gray-100 pt-4">
                         <h3 className="text-sm font-semibold uppercase mb-4">EXPLORE</h3>
                         <div className="space-y-3">
-                            <Link href="/about" className="block text-base" onClick={onClose}>
+                            <Link href="/about" className="block text-base py-2" onClick={onClose}>
                                 About Us
                             </Link>
-                            <Link href="/story" className="block text-base" onClick={onClose}>
+                            <Link href="/story" className="block text-base py-2" onClick={onClose}>
                                 Story
                             </Link>
-                            <Link href="/contact" className="block text-base" onClick={onClose}>
+                            <Link href="/contact" className="block text-base py-2" onClick={onClose}>
                                 Contact
                             </Link>
                         </div>
