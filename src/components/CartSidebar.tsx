@@ -116,16 +116,76 @@ export default function CartSidebar() {
     const formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cartTotal);
 
     const handleCheckout = async () => {
+        console.group('🚀 Checkout Button Clicked');
+        console.log('📊 Current cart state:');
+        console.log('  - Cart items count:', cartItems.length);
+        console.log('  - Cart items:', cartItems);
+        console.log('  - Is processing:', isProcessing);
+        console.log('  - Previous checkout error:', checkoutError);
+
         setIsProcessing(true);
         setCheckoutError(null);
+        console.log('✅ Set processing state to true, cleared previous errors');
 
         try {
+            console.log('🔄 Calling createShopifyCheckout...');
             const checkoutUrl = await createShopifyCheckout(cartItems);
-            window.location.href = checkoutUrl;
+
+            // TEMPORARY FIX: Replace custom domain with myshopify.com for testing
+            const testCheckoutUrl = checkoutUrl.replace('www.mymessageclo.com', 'mymessageclothing.myshopify.com');
+            console.log('🧪 Original checkout URL:', checkoutUrl);
+            console.log('🧪 Test checkout URL:', testCheckoutUrl);
+
+            console.log('✅ Checkout URL received:', testCheckoutUrl);
+            console.log('🔍 Checkout URL validation:');
+
+            // Validate the URL
+            try {
+                const url = new URL(testCheckoutUrl);
+                console.log('  - Valid URL format: ✅');
+                console.log('  - Protocol:', url.protocol);
+                console.log('  - Domain:', url.hostname);
+                console.log('  - Full URL:', url.toString());
+            } catch (urlError) {
+                console.error('  - Invalid URL format: ❌', urlError);
+            }
+
+            console.log('🌐 Attempting redirect...');
+            console.log('  - Current window location:', window.location.href);
+            console.log('  - Target checkout URL:', testCheckoutUrl);
+            console.log('  - Redirect method: window.location.href assignment');
+
+            // Log just before the redirect
+            console.log('⏰ Redirecting now...');
+            window.location.href = testCheckoutUrl;
+
+            // This won't execute if redirect is successful
+            console.log('🤔 Still here after redirect attempt - this should not happen');
+
         } catch (error) {
-            console.error('Checkout error:', error);
+            console.groupCollapsed('❌ Checkout Error Occurred');
+            console.error('💥 Checkout error details:', error);
+            console.log('🔍 Error analysis:');
+            console.log('  - Error type:', typeof error);
+            console.log('  - Error constructor:', error?.constructor?.name);
+            console.log('  - Error message:', error instanceof Error ? error.message : 'Unknown error');
+            console.log('  - Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+
+            if (error instanceof Error) {
+                console.log('  - Is Error instance: ✅');
+                if (error.message.includes('fetch')) {
+                    console.log('  - Possible network/API issue: ⚠️');
+                } else if (error.message.includes('checkout')) {
+                    console.log('  - Checkout-specific error: ⚠️');
+                }
+            }
+            console.groupEnd();
+
             setCheckoutError('Failed to create checkout. Please try again.');
             setIsProcessing(false);
+
+            console.log('🔄 Reset processing state and set error message');
+            console.groupEnd();
         }
     };
 

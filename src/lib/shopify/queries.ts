@@ -109,6 +109,9 @@ export const createCartMutation = `
   }
 `;
 
+// Log the mutation for debugging
+console.log('📋 Cart Creation Mutation:', createCartMutation);
+
 // Query to get recommended products
 export const getRecommendedProductsQuery = `
   query getRecommendedProducts($first: Int!) {

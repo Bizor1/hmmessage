@@ -38,7 +38,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const closeCart = useCallback(() => setIsCartOpen(false), []);
 
     const addToCart = useCallback((item: Omit<CartItem, 'quantity'>) => {
+        console.group('🛍️ Adding item to cart');
+        console.log('📦 Item being added:', item);
+
         setCartItems(prevItems => {
+            console.log('🔍 Current cart items:', prevItems);
+
             // Check if the exact variant already exists in cart
             const existingItem = prevItems.find(i =>
                 i.variantId === item.variantId ||
@@ -46,28 +51,60 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             );
 
             if (existingItem) {
-                return prevItems.map(i =>
+                console.log('✅ Item already exists, updating quantity');
+                console.log('  - Existing item:', existingItem);
+                const updatedItems = prevItems.map(i =>
                     (i.variantId === item.variantId ||
                         (i.id === item.id && JSON.stringify(i.selectedOptions) === JSON.stringify(item.selectedOptions)))
                         ? { ...i, quantity: i.quantity + 1 }
                         : i
                 );
+                console.log('📊 Updated cart items:', updatedItems);
+                console.groupEnd();
+                return updatedItems;
             }
-            return [...prevItems, { ...item, quantity: 1 }];
+
+            console.log('🆕 Adding new item to cart');
+            const newItems = [...prevItems, { ...item, quantity: 1 }];
+            console.log('📊 New cart items:', newItems);
+            console.groupEnd();
+            return newItems;
         });
     }, []);
 
     const removeFromCart = useCallback((id: string) => {
-        setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+        console.group('🗑️ Removing item from cart');
+        console.log('📦 Item ID to remove:', id);
+
+        setCartItems(prevItems => {
+            console.log('🔍 Current cart items:', prevItems);
+            const filteredItems = prevItems.filter(item => item.id !== id);
+            console.log('📊 Cart items after removal:', filteredItems);
+            console.groupEnd();
+            return filteredItems;
+        });
     }, []);
 
     const updateQuantity = useCallback((id: string, quantity: number) => {
-        if (quantity < 1) return;
-        setCartItems(prevItems =>
-            prevItems.map(item =>
+        console.group('🔄 Updating item quantity');
+        console.log('📦 Item ID:', id);
+        console.log('🔢 New quantity:', quantity);
+
+        if (quantity < 1) {
+            console.log('❌ Quantity less than 1, ignoring update');
+            console.groupEnd();
+            return;
+        }
+
+        setCartItems(prevItems => {
+            console.log('🔍 Current cart items:', prevItems);
+            const updatedItems = prevItems.map(item =>
                 item.id === id ? { ...item, quantity } : item
-            )
-        );
+            );
+            console.log('📊 Updated cart items:', updatedItems);
+            console.groupEnd();
+            return updatedItems;
+        });
     }, []);
 
     const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);

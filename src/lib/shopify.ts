@@ -17,20 +17,27 @@ export async function shopifyFetch<T>(
     query: string,
     variables: Record<string, unknown> = {}
 ): Promise<T> {
+    console.group('🌐 Shopify API Request');
+    
     const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
     if (!storefrontAccessToken) {
+        console.error('❌ Missing SHOPIFY_STOREFRONT_ACCESS_TOKEN');
         throw new Error('Missing required environment variable SHOPIFY_STOREFRONT_ACCESS_TOKEN');
     }
 
     const endpoint = 'https://mymessageclothing.myshopify.com/api/2025-04/graphql.json';
 
+    console.log('📡 Request details:');
+    console.log('  - Endpoint:', endpoint);
+    console.log('  - Method: POST');
+    console.log('  - Has access token:', !!storefrontAccessToken);
+    console.log('  - Access token preview:', storefrontAccessToken.substring(0, 8) + '...');
+    console.log('  - Query preview:', query.substring(0, 100) + '...');
+    console.log('  - Variables:', variables);
+
     try {
-        console.log('Making request to Shopify API:', endpoint);
-        console.log('Request headers:', {
-            'Content-Type': 'application/json',
-            'X-Shopify-Storefront-Access-Token': storefrontAccessToken.substring(0, 5) + '...'  // Log only first 5 chars for security
-        });
+        console.log('⏰ Making fetch request...');
         
         const result = await fetch(endpoint, {
             method: 'POST',
@@ -41,28 +48,53 @@ export async function shopifyFetch<T>(
             body: JSON.stringify({ query, variables })
         });
 
-        console.log('Response status:', result.status, result.statusText);
+        console.log('📬 Response received:');
+        console.log('  - Status:', result.status, result.statusText);
+        console.log('  - OK:', result.ok);
+        console.log('  - Headers Content-Type:', result.headers.get('content-type'));
         
         if (!result.ok) {
+            console.error('❌ HTTP Error Response');
             const errorText = await result.text();
-            console.error('Error response body:', errorText);
+            console.error('  - Error body:', errorText);
+            console.groupEnd();
             throw new Error(`Fetch failed: ${result.status} ${result.statusText} - ${errorText}`);
         }
 
+        console.log('📦 Parsing JSON response...');
         const body = await result.json() as ShopifyResponse<T>;
+        
+        console.log('🔍 Response analysis:');
+        console.log('  - Has data:', !!body.data);
+        console.log('  - Has errors:', !!body.errors && body.errors.length > 0);
+        console.log('  - Response body:', body);
 
         if (body.errors) {
-            console.error('Shopify GraphQL Errors:', body.errors);
+            console.error('❌ GraphQL Errors:', body.errors);
+            body.errors.forEach((error, index) => {
+                console.error(`  Error ${index + 1}:`, error.message);
+            });
+            console.groupEnd();
             throw new Error(body.errors.map((e) => e.message).join('\n'));
         }
 
         if (!body.data) {
+            console.error('❌ No data in response');
+            console.groupEnd();
             throw new Error('No data returned from Shopify API.');
         }
 
+        console.log('✅ Request successful');
+        console.groupEnd();
         return body.data;
     } catch (error) {
-        console.error('Error fetching from Shopify:', error);
+        console.error('💥 Shopify fetch error:', error);
+        console.log('🔍 Error details:');
+        console.log('  - Error type:', typeof error);
+        console.log('  - Error message:', error instanceof Error ? error.message : 'Unknown');
+        console.log('  - Error stack:', error instanceof Error ? error.stack : 'No stack');
+        console.groupEnd();
+        
         if (error instanceof Error) {
             throw new Error(`Shopify API fetch error: ${error.message}`);
         } else {
