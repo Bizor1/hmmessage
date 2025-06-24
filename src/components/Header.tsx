@@ -71,7 +71,7 @@ export default function Header() {
     const headerTopClass = isExpired ? "top-0" : "top-8";
 
     const imageSrc = hoveredCategory === 'men'
-        ? 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325553/mymessage/images/WhatsApp%20Image%202025-05-14%20at%2012.29.28%20PM.jpg'
+        ? 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1750780626/8635906c-b0f3-4520-8a00-b2ccbc62fa1c_sdaf31.jpg'
         : 'https://res.cloudinary.com/duhfv8nqy/image/upload/v1747325322/mymessage/images/1.jpg';
     const blurOverlayLeft = "left-[40rem]";
 
